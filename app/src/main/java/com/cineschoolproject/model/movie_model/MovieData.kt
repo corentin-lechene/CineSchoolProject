@@ -1,4 +1,4 @@
-package com.example.cineschoolproject.model.movie_model
+package com.cineschoolproject.model.movie_model
 
 class MovieData(
     val id: Int,
