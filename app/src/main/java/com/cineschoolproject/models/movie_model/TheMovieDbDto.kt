@@ -1,6 +1,6 @@
-package com.cineschoolproject.model.movie_model
+package com.cineschoolproject.models.movie_model
 
-data class FakeTheMovieDbDto(
+data class TheMovieDbDto(
     val adult: Boolean,
     val backdropPath: String,
     val genreIds: List<Int>,

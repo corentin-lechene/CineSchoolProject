@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.example.cineschoolproject'
+    namespace 'com.cineschoolproject'
     compileSdk 34
 
     buildFeatures {
@@ -12,7 +12,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.cineschoolproject"
+        applicationId "com.cineschoolproject"
         minSdk 24
         targetSdk 34
         versionCode 1
@@ -29,16 +29,25 @@ android {
                 "proguard-rules.pro"
             )
 
-            buildConfigField("String","BASE_URL", "\"https://api.themoviedb.org/3\"")
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file("local.properties").newDataInputStream())
+            buildConfigField("String","BASE_URL", "\"https://api.themoviedb.org/3/\"")
+            buildConfigField("String","API_KEY", "\"${properties.getProperty("API_KEY")}\"")
         }
 
         release {
             isMinifyEnabled()
+            isDebuggable()
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3\"")
+
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file("local.properties").newDataInputStream())
+            buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
+            buildConfigField("String", "API_KEY", "\"${properties.getProperty("API_KEY")}\"")
+
         }
     }
     compileOptions {

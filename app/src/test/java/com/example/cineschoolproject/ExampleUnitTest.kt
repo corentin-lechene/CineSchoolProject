@@ -1,4 +1,4 @@
-package com.example.cineschoolproject
+package com.cineschoolproject
 
 import org.junit.Test
 

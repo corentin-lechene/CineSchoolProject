@@ -1,4 +1,4 @@
-package com.cineschoolproject.model.preference_model
+package com.cineschoolproject.models.preference_model
 
 class PreferencesData (
     val darkMode: Boolean,
