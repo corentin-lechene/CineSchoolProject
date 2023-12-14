@@ -2,7 +2,7 @@ package com.cineschoolproject.models.movie_model
 
 data class TheMovieDbDto(
     val adult: Boolean,
-    val backdropPath: String,
+    val backdrop_path: String,
     val genreIds: List<Int>,
     val id: Int,
     val originalLanguage: String,
@@ -10,7 +10,7 @@ data class TheMovieDbDto(
     val overview: String,
     val popularity: Double,
     val posterPath: String,
-    val releaseDate: String,
+    val release_date: String,
     val title: String,
     val video: Boolean,
     val voteAverage: Double,
