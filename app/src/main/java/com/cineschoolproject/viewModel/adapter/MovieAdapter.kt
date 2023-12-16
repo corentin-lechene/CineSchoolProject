@@ -1,3 +1,5 @@
+package com.cineschoolproject.viewModel.adapter
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,7 +54,7 @@ class MovieAdapter(private val movies: List<TheMovieDbDto>) :
         return if (parsedDate.after(currentDate)) {
             "Sortira le ${outputFormat.format(parsedDate)}"
         } else {
-            "Aucune date ${outputFormat.format(parsedDate)}"
+            "Sorti le ${outputFormat.format(parsedDate)}"
         }
     }
 
