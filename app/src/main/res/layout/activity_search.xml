@@ -18,17 +18,19 @@
 
     <!-- Liste films populaire   -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_popular_movies"
+        android:id="@+id/popular_movies_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        tools:itemCount="3"
         tools:listitem="@layout/item_movie_layout" />
 
     <!-- Liste resultat des films   -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_search_movies"
+        android:id="@+id/result_movies_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        tools:itemCount="3"
         tools:listitem="@layout/item_movie_layout" />
 
 

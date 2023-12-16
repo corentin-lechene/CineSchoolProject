@@ -17,48 +17,41 @@ class MovieViewModel(
      */
     private val disposeBag = CompositeDisposable()
 
-    /**
-     * Observables to communicate with the repository
-     */
-    private val theMovieDbDtoData: BehaviorSubject<List<TheMovieDbDto>> =
+    private val _popularMovies: BehaviorSubject<List<TheMovieDbDto>> =
         BehaviorSubject.createDefault(listOf())
-    val popularMovieListLiveData: MutableLiveData<List<TheMovieDbDto>> = MutableLiveData()
-    val searchMovieListLiveData: MutableLiveData<List<TheMovieDbDto>> = MutableLiveData()
+    private val _resultMovies: BehaviorSubject<List<TheMovieDbDto>> =
+        BehaviorSubject.createDefault(listOf())
 
-    /**
-     * Observable to notify the view of new data
-     */
-//    val completeUsersList: MutableLiveData<List<CompleteUserDto>> = MutableLiveData()
+    val popularMovies: MutableLiveData<List<TheMovieDbDto>> = MutableLiveData()
+    val resultMovies: MutableLiveData<List<TheMovieDbDto>> = MutableLiveData()
 
     init {
-        theMovieDbDtoData.subscribe { popularMovieListLiveData.postValue(it) }.addTo(disposeBag)
-        theMovieDbDtoData.subscribe { searchMovieListLiveData.postValue(it) }.addTo(disposeBag)
+        _popularMovies.subscribe { popularMovies.postValue(it) }.addTo(disposeBag)
+        _resultMovies.subscribe { resultMovies.postValue(it) }.addTo(disposeBag)
     }
-
-    fun getMoviesByInput(input: String, page: Int) {
-        this.theMovieDbRepository.getMoviesByQuery(input, page).subscribe(
-            {
-                //todo map to movie at this step
-                this.theMovieDbDtoData.onNext(it)
-            },
-            {
-                Log.d("getMoviesByInput", it.message.toString())
-            }
-        ).addTo(disposeBag)
-    }
-
 
     fun getPopularMovies(page: Int) {
         this.theMovieDbRepository.getPopularMovies(page).subscribe(
             {
-                //todo map to movie at this step
-                this.theMovieDbDtoData.onNext(it)
+                this._popularMovies.onNext(it)
             },
-            {
-                Log.d("getPopularMovies", it.message.toString())
+            { error ->
+                Log.d("getPopularMovies", error.message.toString())
             }
         ).addTo(disposeBag)
     }
+
+    fun getMoviesByQuery(query: String, page: Int) {
+        this.theMovieDbRepository.getMoviesByQuery(query, page).subscribe(
+            {
+                this._resultMovies.onNext(it)
+            },
+            { error ->
+                Log.d("getMoviesByQuery", error.message.toString())
+            }
+        ).addTo(disposeBag)
+    }
+
 
     override fun onCleared() {
         super.onCleared()

@@ -7,14 +7,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cineschoolproject.R
 import com.cineschoolproject.models.movie_model.TheMovieDbDto
 import com.squareup.picasso.Picasso
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class MovieAdapter(private val movies: List<TheMovieDbDto>) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val titleTextView: TextView = itemView.findViewById(R.id.movie_title)
-        val releaseDateTextView: TextView = itemView.findViewById(R.id.movie_release_date)
-        val imageView: ImageView = itemView.findViewById(R.id.movie_image)
+        val itemMovieImage: ImageView = itemView.findViewById(R.id.item_movie_image)
+        val itemMovieTitle: TextView = itemView.findViewById(R.id.item_movie_title)
+        val itemMovieReleaseDate: TextView = itemView.findViewById(R.id.item_movie_release_date)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -25,11 +28,30 @@ class MovieAdapter(private val movies: List<TheMovieDbDto>) :
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movie = movies[position]
-        holder.titleTextView.text = movie.title
-        holder.releaseDateTextView.text = movie.release_date
+        holder.itemMovieTitle.text = movie.title
+        holder.itemMovieReleaseDate.text = this.formatDate(movie.release_date)
+        //todo use media base url
         Picasso.get()
             .load("https://image.tmdb.org/t/p/w300" + movie.backdrop_path)
-            .into(holder.imageView)
+            .into(holder.itemMovieImage)
+    }
+
+    private fun formatDate(date: String): String {
+        if (date.isEmpty()) {
+            return "Aucune date"
+        }
+
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val parsedDate: Date = inputFormat.parse(date) ?: return "Aucune date"
+
+        val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+        val currentDate = Date()
+
+        return if (parsedDate.after(currentDate)) {
+            "Sortira le ${outputFormat.format(parsedDate)}"
+        } else {
+            "Aucune date ${outputFormat.format(parsedDate)}"
+        }
     }
 
     override fun getItemCount(): Int {

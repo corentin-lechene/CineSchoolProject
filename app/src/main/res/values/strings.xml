@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">CineSchoolProject</string>
     <string name="search_movie">Recherche un film</string>
-    <string name="search">Rechercher...</string>
+    <string name="popular_movies">Films populaires</string>
+    <string name="result_movies">Résultats de la recherche</string>
+    <string name="search">Rechercher…</string>
     <string name="cancel">Annuler</string>
+    <string name="no_date">Date non prévue</string>
+    <string name="will_release_at">Sortira le</string>
+    <string name="release_at">Sorti le</string>
 </resources>

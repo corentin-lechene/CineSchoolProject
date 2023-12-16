@@ -4,24 +4,33 @@ import MovieAdapter
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cineschoolproject.di.injectModuleDependencies
 import com.cineschoolproject.di.parseAndInjectConfiguration
+import com.cineschoolproject.models.movie_model.TheMovieDbDto
 import com.cineschoolproject.viewModel.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+enum class SearchPageView {
+    POPULAR,
+    SEARCH
+}
+
 class MainActivity : AppCompatActivity() {
+    private var currentView: SearchPageView = SearchPageView.POPULAR
+
     private val movieViewModel: MovieViewModel by viewModel()
-    private lateinit var popularMovieAdapter: MovieAdapter
-    private lateinit var searchMovieAdapter: MovieAdapter
+    private lateinit var popularMoviesRecyclerView: RecyclerView
+    private lateinit var resultMoviesRecyclerView: RecyclerView
+    private lateinit var searchBar: EditText
+    private lateinit var searchBarCancelButton: TextView
+    private lateinit var listHeaderSection: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,103 +38,73 @@ class MainActivity : AppCompatActivity() {
         parseAndInjectConfiguration()
         injectModuleDependencies(this)
 
-        setInputEvents()
+        this.popularMoviesRecyclerView = findViewById(R.id.popular_movies_recycler_view)
+        this.resultMoviesRecyclerView = findViewById(R.id.result_movies_recycler_view)
+        this.searchBar = findViewById(R.id.search_movie_input)
+        this.searchBarCancelButton = findViewById(R.id.search_movie_input_cancel)
+        this.listHeaderSection = findViewById(R.id.list_header_title)
 
-        val popularMovieRecyclerView: RecyclerView = findViewById(R.id.popular_movie_recycler_view)
-        popularMovieRecyclerView.layoutManager = LinearLayoutManager(this)
+        this.movieViewModel.popularMovies.observe(this@MainActivity) {
+            this.setUpPopularMovies(it)
+        }
+        this.movieViewModel.resultMovies.observe(this@MainActivity) {
+            this.setUpResultMovies(it)
+        }
 
-        popularMovieAdapter = MovieAdapter(emptyList())
-        popularMovieRecyclerView.adapter = popularMovieAdapter;
-
-        // get popular movies
         this.movieViewModel.getPopularMovies(1)
-        this.movieViewModel.popularMovieListLiveData.observe(this@MainActivity) {
-            if (it.isNotEmpty()) {
-                Log.d("Size popular movies", it.size.toString())
-                popularMovieAdapter = MovieAdapter(it)
-                popularMovieRecyclerView.adapter = popularMovieAdapter;
+
+        this.setSearchBar()
+        this.setView(SearchPageView.POPULAR)
+    }
+
+    private fun setSearchBar() {
+        this.searchBar.doOnTextChanged { text, _, _, _ ->
+            if (!text.isNullOrBlank()) {
+                this.movieViewModel.getMoviesByQuery(text.toString(), 1)
             }
+        }
+        this.searchBar.setOnFocusChangeListener { _, hasFocus ->
+            if(hasFocus) {
+                this.setView(SearchPageView.SEARCH)
+            } else {
+                this.setView(SearchPageView.POPULAR)
+            }
+        }
+        this.searchBarCancelButton.setOnClickListener {
+            this.setView(SearchPageView.POPULAR)
         }
     }
 
-    private fun setInputEvents() {
-        val titleSearchPage: TextView = findViewById(R.id.title_search_page)
-        val searchBar: EditText = findViewById(R.id.search_movie_input)
-        val cancelButton: TextView = findViewById(R.id.search_movie_cancel)
-        val sectionTitle: TextView = findViewById(R.id.title_section)
-        val popularMovieRecyclerView: RecyclerView = findViewById(R.id.popular_movie_recycler_view)
-        val resultMovieRecyclerView: RecyclerView = findViewById(R.id.result_movie_recycler_view)
-        popularMovieRecyclerView.layoutManager = LinearLayoutManager(this)
-        resultMovieRecyclerView.layoutManager = LinearLayoutManager(this)
+    private fun setView(newView: SearchPageView) {
+        this.currentView = newView
 
-        sectionTitle.text = "Films populaires"
-        searchBar.setOnFocusChangeListener { _, hasFocus ->
-            if(hasFocus) {
-                cancelButton.visibility = View.VISIBLE
-                titleSearchPage.visibility = View.GONE
-                sectionTitle.text = "Résultats de la recherche"
-                popularMovieRecyclerView.visibility = View.GONE
-                resultMovieRecyclerView.visibility = View.VISIBLE
-            } else {
-                cancelButton.visibility = View.GONE
-                titleSearchPage.visibility = View.VISIBLE
-                sectionTitle.text = "Films populaires"
-                popularMovieRecyclerView.visibility = View.VISIBLE
-                resultMovieRecyclerView.visibility = View.GONE
-            }
-        }
-
-        cancelButton.setOnClickListener {
-            cancelButton.visibility = View.GONE
-            titleSearchPage.visibility = View.VISIBLE
-            popularMovieRecyclerView.visibility = View.VISIBLE
-            resultMovieRecyclerView.visibility = View.GONE
-
-            searchMovieAdapter = MovieAdapter(emptyList())
-            resultMovieRecyclerView.adapter = searchMovieAdapter
-
-            searchBar.clearFocus()
+        if(this.currentView == SearchPageView.POPULAR) {
+            this.listHeaderSection.text = "Films Populaires"
+            this.popularMoviesRecyclerView.visibility = View.VISIBLE
+            this.resultMoviesRecyclerView.visibility = View.GONE
+            this.searchBarCancelButton.visibility = View.GONE
+            this.searchBar.clearFocus()
+            this.searchBar.text = null
             val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(searchBar.windowToken, 0)
+        } else if(this.currentView == SearchPageView.SEARCH) {
+            this.listHeaderSection.text = "Résultats de la recherche"
+            this.resultMoviesRecyclerView.visibility = View.VISIBLE
+            this.popularMoviesRecyclerView.visibility = View.GONE
+            this.searchBarCancelButton.visibility = View.VISIBLE
+            this.resultMoviesRecyclerView.adapter = MovieAdapter(listOf())
         }
-
-        searchBar.addTextChangedListener(object: TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val newText = s.toString()
-                onSearch(newText)
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-        })
     }
 
-    fun onSearch(input: String) {
-        val resultMovieRecyclerView: RecyclerView = findViewById(R.id.result_movie_recycler_view)
-        resultMovieRecyclerView.layoutManager = LinearLayoutManager(this)
+    private fun setUpPopularMovies(movies: List<TheMovieDbDto>) {
+        val popularMovieAdapter = MovieAdapter(movies)
+        this.popularMoviesRecyclerView.layoutManager = LinearLayoutManager(this)
+        this.popularMoviesRecyclerView.adapter = popularMovieAdapter
+    }
 
-        if(input.isEmpty()) {
-            searchMovieAdapter = MovieAdapter(emptyList())
-            resultMovieRecyclerView.adapter = searchMovieAdapter
-            return
-        }
-
-        searchMovieAdapter = MovieAdapter(emptyList())
-        resultMovieRecyclerView.adapter = searchMovieAdapter;
-
-        // search movies
-        this.movieViewModel.getMoviesByInput(input, 1)
-        this.movieViewModel.searchMovieListLiveData.observe(this@MainActivity) {
-            if (it.isNotEmpty()) {
-                Log.d("Size popular movies", it.size.toString())
-                searchMovieAdapter = MovieAdapter(it)
-                resultMovieRecyclerView.adapter = searchMovieAdapter;
-            }
-        }
+    private fun setUpResultMovies(movies: List<TheMovieDbDto>) {
+        val resultMoviesAdapter = MovieAdapter(movies)
+        this.resultMoviesRecyclerView.layoutManager = LinearLayoutManager(this)
+        this.resultMoviesRecyclerView.adapter = resultMoviesAdapter
     }
 }

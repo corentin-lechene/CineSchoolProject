@@ -43,7 +43,7 @@
                 android:autofillHints="" />
 
             <TextView
-                android:id="@+id/search_movie_cancel"
+                android:id="@+id/search_movie_input_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
