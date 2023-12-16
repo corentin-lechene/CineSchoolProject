@@ -1,6 +1,6 @@
 package com.cineschoolproject
 
-import MovieAdapter
+import com.cineschoolproject.viewModel.adapter.MovieAdapter
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
