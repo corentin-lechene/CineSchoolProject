@@ -6,7 +6,6 @@
     android:padding="10dp">
 
     <LinearLayout
-        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -22,18 +21,38 @@
             android:textStyle="bold" />
 
         <!-- Champ de recherche -->
-        <EditText
-            android:id="@+id/search_movie_input"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginTop="8dp"
-            android:paddingStart="12dp"
-            android:hint="Rechercher..."
-            android:autofillHints=""
-            android:textSize="15sp"
-            android:padding="8dp"
-            android:background="@drawable/edittext_rounded_search"
-            android:inputType="text" />
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/search_movie_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="75"
+                android:autofillHints=""
+                android:background="@drawable/edittext_rounded_search"
+                android:hint="Rechercher..."
+                android:inputType="text"
+                android:padding="8dp"
+                android:paddingStart="12dp"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/search_movie_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="Annuler"
+                android:textStyle="bold"
+                android:textColor="@color/blue"
+                android:visibility="gone"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

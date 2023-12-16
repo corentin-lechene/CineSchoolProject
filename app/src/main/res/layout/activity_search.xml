@@ -19,9 +19,16 @@
         tools:visibility="visible"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/movie_recycler_view"
+        android:id="@+id/popular_movie_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        tools:listitem="@layout/movie_item_layout"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/result_movie_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
         tools:listitem="@layout/movie_item_layout"/>
 
 
