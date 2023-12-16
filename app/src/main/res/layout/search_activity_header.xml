@@ -13,11 +13,11 @@
 
         <!-- Titre -->
         <TextView
-            android:id="@+id/title_search_page"
+            android:id="@+id/activity_search_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Recherche un film"
             android:textSize="30sp"
+            android:text="@string/search_movie"
             android:textStyle="bold" />
 
         <!-- Champ de recherche -->
@@ -30,16 +30,17 @@
 
             <EditText
                 android:id="@+id/search_movie_input"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="75"
-                android:autofillHints=""
-                android:background="@drawable/edittext_rounded_search"
-                android:hint="Rechercher..."
                 android:inputType="text"
+                android:textSize="15sp"
                 android:padding="8dp"
+                android:background="@drawable/edittext_rounded_search"
+                android:hint="@string/search"
                 android:paddingStart="12dp"
-                android:textSize="15sp" />
+                android:paddingEnd="12dp"
+                android:autofillHints="" />
 
             <TextView
                 android:id="@+id/search_movie_cancel"
@@ -47,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:text="Annuler"
+                android:text="@string/cancel"
                 android:textStyle="bold"
                 android:textColor="@color/blue"
                 android:visibility="gone"/>

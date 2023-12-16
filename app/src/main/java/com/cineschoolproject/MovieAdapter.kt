@@ -1,4 +1,3 @@
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +19,7 @@ class MovieAdapter(private val movies: List<TheMovieDbDto>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.movie_item_layout, parent, false)
+            .inflate(R.layout.item_movie_layout, parent, false)
         return MovieViewHolder(view)
     }
 

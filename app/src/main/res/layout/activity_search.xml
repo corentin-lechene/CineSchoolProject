@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,28 +7,29 @@
     tools:context=".MainActivity">
 
     <include
-        android:id="@+id/search_header"
-        layout="@layout/activity_search_header"
+        layout="@layout/search_activity_header"
         android:visibility="visible"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 
     <include
-        layout="@layout/activity_title_section"
+        layout="@layout/list_header_section"
         android:visibility="visible"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 
+    <!-- Liste films populaire   -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/popular_movie_recycler_view"
+        android:id="@+id/recycler_view_popular_movies"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/movie_item_layout"/>
+        tools:listitem="@layout/item_movie_layout" />
 
+    <!-- Liste resultat des films   -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/result_movie_recycler_view"
+        android:id="@+id/recycler_view_search_movies"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        tools:listitem="@layout/movie_item_layout"/>
+        tools:listitem="@layout/item_movie_layout" />
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>
