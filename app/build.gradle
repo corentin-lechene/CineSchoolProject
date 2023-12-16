@@ -31,8 +31,9 @@ android {
 
             Properties properties = new Properties()
             properties.load(project.rootProject.file("local.properties").newDataInputStream())
-            buildConfigField("String","BASE_URL", "\"https://api.themoviedb.org/3/\"")
-            buildConfigField("String","API_KEY", "\"${properties.getProperty("API_KEY")}\"")
+            buildConfigField("String","TMDB_API_URL", "\"https://api.themoviedb.org/3/\"")
+            buildConfigField("String","TMDB_MEDIA_URL", "\"https://image.tmdb.org/t/p/\"")
+            buildConfigField("String","TMDB_API_KEY", "\"${properties.getProperty("TMDB_API_KEY")}\"")
         }
 
         release {
@@ -45,9 +46,9 @@ android {
 
             Properties properties = new Properties()
             properties.load(project.rootProject.file("local.properties").newDataInputStream())
-            buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
-            buildConfigField("String", "API_KEY", "\"${properties.getProperty("API_KEY")}\"")
-
+            buildConfigField("String","TMDB_API_URL", "\"https://api.themoviedb.org/3/\"")
+            buildConfigField("String","TMDB_MEDIA_URL", "\"https://image.tmdb.org/t/p/\"")
+            buildConfigField("String","TMDB_API_KEY", "\"${properties.getProperty("TMDB_API_KEY")}\"")
         }
     }
     compileOptions {
@@ -62,7 +63,7 @@ android {
 dependencies {
     implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.10.0'
+    implementation("com.google.android.material:material:1.11.0")
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
@@ -71,7 +72,6 @@ dependencies {
     implementation("io.insert-koin:koin-android:3.5.0")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

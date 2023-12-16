@@ -16,9 +16,10 @@ import java.util.concurrent.TimeUnit
  * Module where all the remote (network) classes to inject must be declared
  */
 internal val remoteModule = module {
-    single(named(fakeApiRetrofitClient)) { createRetrofitClient(get(), get<TheMovieDb>().baseUrl, get<TheMovieDb>().apiKey) }
+    single(named(fakeApiRetrofitClient)) {
+        createRetrofitClient(get(), get<TheMovieDb>().apiUrl, get<TheMovieDb>().apiKey)
+    }
     single { createOkHttpClient() }
-
 
     single {
         createWebService<TheMovieDbApiService>(
@@ -34,14 +35,14 @@ fun createOkHttpClient(): OkHttpClient {
         .build()
 }
 
-fun createRetrofitClient(okhttpClient: OkHttpClient, baseUrl: String, apiKey: String): Retrofit {
+fun createRetrofitClient(okhttpClient: OkHttpClient, apiUrl: String, apiKey: String): Retrofit {
     val gsonConverter =
         GsonConverterFactory.create(
             GsonBuilder().create()
         )
 
     return Retrofit.Builder()
-        .baseUrl(baseUrl)
+        .baseUrl(apiUrl)
         .client(okhttpClient)
         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .addConverterFactory(gsonConverter)

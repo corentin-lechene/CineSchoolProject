@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.cineschoolproject.BuildConfig
 import com.cineschoolproject.R
 import com.cineschoolproject.models.movie_model.TheMovieDbDto
 import com.squareup.picasso.Picasso
@@ -32,7 +33,8 @@ class MovieAdapter(private val movies: List<TheMovieDbDto>) :
         holder.itemMovieReleaseDate.text = this.formatDate(movie.release_date)
         //todo use media base url
         Picasso.get()
-            .load("https://image.tmdb.org/t/p/w300" + movie.backdrop_path)
+            .load(BuildConfig.TMDB_MEDIA_URL + "w300" + movie.backdrop_path)
+            .error(R.drawable.no_image)
             .into(holder.itemMovieImage)
     }
 
