@@ -12,4 +12,11 @@ interface TheMovieDbApiService {
         @Query("region") region: String,
         @Query("page") page: Int,
     ): Flowable<TheMovieDbResponseDto>
+
+    @GET("search/movie")
+    fun getMoviesByQuery(
+        @Query("query") query: String,
+        @Query("language") language: String,
+        @Query("page") page: Int,
+    ): Flowable<TheMovieDbResponseDto>
 }

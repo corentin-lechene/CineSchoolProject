@@ -25,7 +25,11 @@ fun injectModuleDependencies(context: Context) {
  * and inject the structure representing it in the dependency tree
  */
 fun parseAndInjectConfiguration() {
-    val apiConf = TheMovieDb(baseUrl = BuildConfig.BASE_URL, apiKey = BuildConfig.API_KEY)
+    val apiConf = TheMovieDb(
+        apiUrl = BuildConfig.TMDB_API_URL,
+        mediaUrl = BuildConfig.TMDB_MEDIA_URL,
+        apiKey = BuildConfig.TMDB_API_KEY
+    )
     modules.add(
         module {
             single { apiConf }
@@ -35,4 +39,4 @@ fun parseAndInjectConfiguration() {
 
 private val modules = mutableListOf(coreModule, remoteModule)
 
-data class TheMovieDb(val baseUrl: String, val apiKey: String)
+data class TheMovieDb(val apiUrl: String, val mediaUrl: String, val apiKey: String)
