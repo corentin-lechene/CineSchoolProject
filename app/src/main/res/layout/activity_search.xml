@@ -16,6 +16,12 @@
         android:visibility="visible"
         tools:visibility="visible" />
 
+    <ProgressBar
+        android:id="@+id/loading_search_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
     <!-- Liste films populaire   -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/popular_movies_recycler_view"
