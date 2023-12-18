@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.widget.doBeforeTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var searchBar: EditText
     private lateinit var searchBarCancelButton: TextView
     private lateinit var listHeaderSection: TextView
+    private lateinit var loadingProgressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,12 +46,14 @@ class MainActivity : AppCompatActivity() {
         this.searchBar = findViewById(R.id.search_movie_input)
         this.searchBarCancelButton = findViewById(R.id.search_movie_input_cancel)
         this.listHeaderSection = findViewById(R.id.list_header_title)
+        this.loadingProgressBar = findViewById(R.id.loading_search_page)
 
         this.movieViewModel.popularMovies.observe(this@MainActivity) {
             this.setUpPopularMovies(it)
         }
         this.movieViewModel.resultMovies.observe(this@MainActivity) {
             this.setUpResultMovies(it)
+            loadingProgressBar.visibility = View.GONE
         }
 
         this.movieViewModel.getPopularMovies(1)
@@ -58,8 +63,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setSearchBar() {
+        this.searchBar.doBeforeTextChanged { text, _, _, _ ->
+            if(text.isNullOrBlank()) {
+                loadingProgressBar.visibility = View.GONE
+            }
+        }
         this.searchBar.doOnTextChanged { text, _, _, _ ->
             if (!text.isNullOrBlank()) {
+                loadingProgressBar.visibility = View.VISIBLE
                 this.movieViewModel.getMoviesByQuery(text.toString(), 1)
             }
         }
@@ -87,6 +98,7 @@ class MainActivity : AppCompatActivity() {
             this.searchBar.text = null
             val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(searchBar.windowToken, 0)
+            loadingProgressBar.visibility = View.GONE
         } else if(this.currentView == SearchPageView.SEARCH) {
             this.listHeaderSection.text = "Résultats de la recherche"
             this.resultMoviesRecyclerView.visibility = View.VISIBLE
