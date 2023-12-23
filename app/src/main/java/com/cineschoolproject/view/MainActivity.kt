@@ -1,4 +1,4 @@
-package com.cineschoolproject
+package com.cineschoolproject.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,11 +6,12 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cineschoolproject.R
 import com.cineschoolproject.di.injectModuleDependencies
 import com.cineschoolproject.di.parseAndInjectConfiguration
 import com.cineschoolproject.models.movie_model.dto.ViewMovieSeenRequest
 import com.cineschoolproject.viewModel.MovieSeenViewModel
-import com.cineschoolproject.viewModel.adapter.MovieSeenAdapter
+import com.cineschoolproject.view.adapter.MovieSeenAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {

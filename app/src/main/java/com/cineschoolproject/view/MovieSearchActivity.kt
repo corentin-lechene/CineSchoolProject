@@ -1,4 +1,4 @@
-package com.cineschoolproject
+package com.cineschoolproject.view
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
@@ -12,11 +12,12 @@ import androidx.core.widget.doBeforeTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cineschoolproject.R
 import com.cineschoolproject.di.injectModuleDependencies
 import com.cineschoolproject.di.parseAndInjectConfiguration
 import com.cineschoolproject.models.movie_model.dto.TheMovieDbDto
 import com.cineschoolproject.viewModel.MovieViewModel
-import com.cineschoolproject.viewModel.adapter.MovieAdapter
+import com.cineschoolproject.view.adapter.MovieAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 enum class SearchPageView {

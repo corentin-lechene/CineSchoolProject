@@ -4,15 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MovieSearchActivity">
+    tools:context=".view.MovieSearchActivity">
 
     <include
-        layout="@layout/search_activity_header"
+        layout="@layout/header_search_activity"
         android:visibility="visible"
         tools:visibility="visible" />
 
     <include
-        layout="@layout/list_header_section"
+        layout="@layout/header_list_section"
         android:visibility="visible"
         tools:visibility="visible" />
 
@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:itemCount="3"
-        tools:listitem="@layout/item_movie_layout" />
+        tools:listitem="@layout/card_movie_search" />
 
     <!-- Liste resultat des films   -->
     <androidx.recyclerview.widget.RecyclerView
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         tools:itemCount="3"
-        tools:listitem="@layout/item_movie_layout" />
+        tools:listitem="@layout/card_movie_search" />
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>
