@@ -6,7 +6,7 @@ class MovieData(
     val overview: String,
     val imageUrl: String?,
     val hasBackdrop: Boolean,
-    val releasedAt: Int,
+    val releasedAt: String,
     val rating: Int,
 ) {
 
