@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cineschoolproject.di.injectModuleDependencies
 import com.cineschoolproject.di.parseAndInjectConfiguration
+import com.cineschoolproject.models.movie_model.MovieData
 import com.cineschoolproject.models.movie_model.TheMovieDbDto
 import com.cineschoolproject.viewModel.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -108,13 +109,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setUpPopularMovies(movies: List<TheMovieDbDto>) {
+    private fun setUpPopularMovies(movies: List<MovieData>) {
         val popularMovieAdapter = MovieAdapter(movies)
         this.popularMoviesRecyclerView.layoutManager = LinearLayoutManager(this)
         this.popularMoviesRecyclerView.adapter = popularMovieAdapter
     }
 
-    private fun setUpResultMovies(movies: List<TheMovieDbDto>) {
+    private fun setUpResultMovies(movies: List<MovieData>) {
         val resultMoviesAdapter = MovieAdapter(movies)
         this.resultMoviesRecyclerView.layoutManager = LinearLayoutManager(this)
         this.resultMoviesRecyclerView.adapter = resultMoviesAdapter

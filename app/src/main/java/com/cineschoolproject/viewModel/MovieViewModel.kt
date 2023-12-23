@@ -3,6 +3,7 @@ package com.cineschoolproject.viewModel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.cineschoolproject.models.movie_model.MovieData
 import com.cineschoolproject.models.movie_model.TheMovieDbDto
 import com.cineschoolproject.repositories.TheMovieDbRepository
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -17,13 +18,13 @@ class MovieViewModel(
      */
     private val disposeBag = CompositeDisposable()
 
-    private val _popularMovies: BehaviorSubject<List<TheMovieDbDto>> =
+    private val _popularMovies: BehaviorSubject<List<MovieData>> =
         BehaviorSubject.createDefault(listOf())
-    private val _resultMovies: BehaviorSubject<List<TheMovieDbDto>> =
+    private val _resultMovies: BehaviorSubject<List<MovieData>> =
         BehaviorSubject.createDefault(listOf())
 
-    val popularMovies: MutableLiveData<List<TheMovieDbDto>> = MutableLiveData()
-    val resultMovies: MutableLiveData<List<TheMovieDbDto>> = MutableLiveData()
+    val popularMovies: MutableLiveData<List<MovieData>> = MutableLiveData()
+    val resultMovies: MutableLiveData<List<MovieData>> = MutableLiveData()
 
     init {
         _popularMovies.subscribe { popularMovies.postValue(it) }.addTo(disposeBag)
@@ -32,8 +33,11 @@ class MovieViewModel(
 
     fun getPopularMovies(page: Int) {
         this.theMovieDbRepository.getPopularMovies(page).subscribe(
-            {
-                this._popularMovies.onNext(it)
+            { response ->
+                val mappedMovieData = response.map {
+                    it.toMovieData()
+                }
+                this._popularMovies.onNext(mappedMovieData)
             },
             { error ->
                 Log.d("getPopularMovies", error.message.toString())
@@ -43,8 +47,11 @@ class MovieViewModel(
 
     fun getMoviesByQuery(query: String, page: Int) {
         this.theMovieDbRepository.getMoviesByQuery(query, page).subscribe(
-            {
-                this._resultMovies.onNext(it)
+            { response ->
+                val mappedMovieData = response.map {
+                    it.toMovieData()
+                }
+                this._resultMovies.onNext(mappedMovieData)
             },
             { error ->
                 Log.d("getMoviesByQuery", error.message.toString())
