@@ -8,13 +8,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cineschoolproject.BuildConfig
 import com.cineschoolproject.R
-import com.cineschoolproject.models.movie_model.dto.TheMovieDbDto
+import com.cineschoolproject.models.movie_model.MovieData
+import com.cineschoolproject.models.movie_model.TheMovieDbDto
 import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class MovieAdapter(private val movies: List<TheMovieDbDto>) :
+class MovieAdapter(private val movies: List<MovieData>) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -32,10 +33,9 @@ class MovieAdapter(private val movies: List<TheMovieDbDto>) :
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movie = movies[position]
         holder.itemMovieTitle.text = movie.title
-        holder.itemMovieReleaseDate.text = this.formatDate(movie.release_date)
-        //todo use media base url
+        holder.itemMovieReleaseDate.text = this.formatDate(movie.releasedAt)
         Picasso.get()
-            .load(BuildConfig.TMDB_MEDIA_URL + "w300" + movie.backdrop_path)
+            .load(BuildConfig.TMDB_MEDIA_URL + "w300" + movie.imageUrl)
             .error(R.drawable.no_image)
             .into(holder.itemMovieImage)
     }
