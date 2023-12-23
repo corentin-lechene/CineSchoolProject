@@ -89,7 +89,7 @@ class MovieSearchActivity : AppCompatActivity() {
         this.currentView = newView
 
         if(this.currentView == SearchPageView.POPULAR) {
-            this.listHeaderSection.text = "Films Populaires"
+            this.listHeaderSection.text = getString(R.string.popular_movies)
             this.popularMoviesRecyclerView.visibility = View.VISIBLE
             this.resultMoviesRecyclerView.visibility = View.GONE
             this.searchBarCancelButton.visibility = View.GONE
@@ -99,7 +99,7 @@ class MovieSearchActivity : AppCompatActivity() {
             inputMethodManager.hideSoftInputFromWindow(searchBar.windowToken, 0)
             loadingProgressBar.visibility = View.GONE
         } else if(this.currentView == SearchPageView.SEARCH) {
-            this.listHeaderSection.text = "Résultats de la recherche"
+            this.listHeaderSection.text = getString(R.string.result_movies)
             this.resultMoviesRecyclerView.visibility = View.VISIBLE
             this.popularMoviesRecyclerView.visibility = View.GONE
             this.searchBarCancelButton.visibility = View.VISIBLE
