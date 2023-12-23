@@ -1,4 +1,4 @@
-package com.cineschoolproject.viewModel.adapter
+package com.cineschoolproject.view.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -26,7 +26,7 @@ class MovieAdapter(private val movies: List<MovieData>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_movie_layout, parent, false)
+            .inflate(R.layout.card_movie_search, parent, false)
         return MovieViewHolder(view)
     }
 

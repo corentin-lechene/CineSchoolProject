@@ -8,4 +8,11 @@
     <string name="no_date">Date non prévue</string>
     <string name="will_release_at">Sortira le</string>
     <string name="release_at">Sorti le</string>
+
+    <!-- Main Activity -->
+    <string name="home">Accueil</string>
+    <string name="settings_desc">Accéder à vos paramètres</string>
+    <string name="search_desc">Rechercher un film</string>
+    <string name="my_view_list">Ma Liste</string>
+
 </resources>
