@@ -1,6 +1,6 @@
 package com.cineschoolproject.services
 
-import com.cineschoolproject.models.movie_model.TheMovieDbResponseDto
+import com.cineschoolproject.models.movie_model.dto.TheMovieDbResponseDto
 import io.reactivex.rxjava3.core.Flowable
 import retrofit2.http.GET
 import retrofit2.http.Query

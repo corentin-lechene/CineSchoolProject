@@ -1,4 +1,4 @@
-package com.cineschoolproject.models.movie_model
+package com.cineschoolproject.models.movie_model.dto
 
 data class TheMovieDbResponseDto(
     val page: Int,

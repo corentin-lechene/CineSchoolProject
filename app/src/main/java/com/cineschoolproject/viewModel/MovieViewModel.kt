@@ -3,7 +3,7 @@ package com.cineschoolproject.viewModel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.cineschoolproject.models.movie_model.TheMovieDbDto
+import com.cineschoolproject.models.movie_model.dto.TheMovieDbDto
 import com.cineschoolproject.repositories.TheMovieDbRepository
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo

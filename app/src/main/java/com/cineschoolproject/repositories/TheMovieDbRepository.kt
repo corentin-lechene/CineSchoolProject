@@ -1,6 +1,6 @@
 package com.cineschoolproject.repositories
 
-import com.cineschoolproject.models.movie_model.TheMovieDbDto
+import com.cineschoolproject.models.movie_model.dto.TheMovieDbDto
 import com.cineschoolproject.services.TheMovieDbApiService
 import io.reactivex.rxjava3.core.Flowable
 

@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cineschoolproject.BuildConfig
 import com.cineschoolproject.R
-import com.cineschoolproject.models.movie_model.TheMovieDbDto
+import com.cineschoolproject.models.movie_model.dto.TheMovieDbDto
 import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.util.Date
