@@ -7,11 +7,15 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import com.cineschoolproject.R
+import com.cineschoolproject.models.movie_model.dto.RegisterMovieSeenRequest
+import com.cineschoolproject.view.BottomSheetListener
 import com.cineschoolproject.viewModel.MovieSeenViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FormRegisterMovieSeenBottomSheet : BottomSheetDialogFragment() {
+class FormRegisterMovieSeenBottomSheet(
+    private val bottomSheetListener : BottomSheetListener
+) : BottomSheetDialogFragment() {
     private val movieSeenViewModel : MovieSeenViewModel by viewModel()
     private lateinit var  saveMovieSeenButton: Button
     private lateinit var  dateInputEditText: EditText
@@ -24,6 +28,7 @@ class FormRegisterMovieSeenBottomSheet : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // TODO : find a way for keyboard
         return inflater.inflate(R.layout.form_register_movie_seen, container, false)
     }
 
@@ -35,8 +40,26 @@ class FormRegisterMovieSeenBottomSheet : BottomSheetDialogFragment() {
         this.noteInputEditText = view.findViewById(R.id.note_input_et)
         this.commentInputEditText = view.findViewById(R.id.comment_input_et)
 
-        saveMovieSeenButton.setOnClickListener {
-            dismiss() // Cela ferme le BottomSheet
+        this.saveMovieSeenButton.setOnClickListener {
+            this.addMovieSeen()
         }
     }
+
+    private fun addMovieSeen() {
+        val registerMovieSeenRequest = RegisterMovieSeenRequest(
+            this.dateInputEditText.text.toString(),
+            this.noteInputEditText.text.toString().toInt(),
+            this.commentInputEditText.toString()
+        )
+
+        // TODO : pass information from movie detail
+        val title = "Iron man"
+        val imageUrl = "https://image.tmdb.org/t/p/w300/9BBTo63ANSmhC4e6r62OJFuK2GL.jpg"
+        val id = 3
+        this.movieSeenViewModel.addMovieSeen(registerMovieSeenRequest, title, imageUrl, id)
+        bottomSheetListener.onBottomSheetDismissed()
+        dismiss()
+    }
+
 }
+

@@ -16,7 +16,7 @@ import com.cineschoolproject.view.bottomSheet.FormRegisterMovieSeenBottomSheet
 import com.cineschoolproject.viewModel.MovieSeenViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), BottomSheetListener {
     private val movieSeenViewModel : MovieSeenViewModel by viewModel()
     private lateinit var  movieSeenRecyclerView: RecyclerView
     private lateinit var  searchButton: ImageView
@@ -65,9 +65,10 @@ class MainActivity : AppCompatActivity() {
     * This function opens show Form Register Movie Seen BottomSheet
     * */
     private fun showModalFormMovieSeen() {
-        val bottomSheet = FormRegisterMovieSeenBottomSheet()
+        val bottomSheet = FormRegisterMovieSeenBottomSheet(this)
         bottomSheet.show(supportFragmentManager, "BottomSheetDialog")
     }
+
 
     private fun displaySearchPage() {
         Intent (
@@ -76,4 +77,11 @@ class MainActivity : AppCompatActivity() {
         ).also { startActivity(it) }
     }
 
+    override fun onBottomSheetDismissed() {
+        this.movieSeenViewModel.getMoviesSeen()
+    }
+}
+
+interface BottomSheetListener {
+    fun onBottomSheetDismissed()
 }

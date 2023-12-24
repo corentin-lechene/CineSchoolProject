@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cineschoolproject.models.movie_model.MovieSeen
+import com.cineschoolproject.models.movie_model.dto.RegisterMovieSeenRequest
 import com.cineschoolproject.models.movie_model.dto.ViewMovieSeenRequest
 import com.cineschoolproject.repositories.MovieSeenRepository
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -35,10 +36,17 @@ class MovieSeenViewModel(
         ).addTo(disposeBag)
     }
 
+    fun addMovieSeen(registerMovieSeenRequest: RegisterMovieSeenRequest, title: String,
+                     imageUrl: String, idMovie: Int) {
+        // TODO : implement domain logical
+        val movieSeen = MovieSeen(idMovie, title, imageUrl, registerMovieSeenRequest)
+        this.movieSeenRepository.addMovieSeen(movieSeen)
+    }
+
     /*
     * To map MovieSeen to ViewMovieSeenRequest (dto)
     * */
-    private  fun MovieSeen.toViewMovieSeenRequest() = ViewMovieSeenRequest(
+    private fun MovieSeen.toViewMovieSeenRequest() = ViewMovieSeenRequest(
         title = title,
         imageUrl = imageUrl
     )
