@@ -15,4 +15,18 @@
     <string name="search_desc">Rechercher un film</string>
     <string name="my_view_list">Ma Liste</string>
 
+    <!-- Dteail Movie -->
+    <string name="add_movie_seen_button">J\'ai vu ce film</string>
+
+    <!-- Form register movie seen -->
+    <string name="title_modal">Enregister un film</string>
+    <string name="label_of_input_date">Date</string>
+    <string name="hint_of_input_date">01/01/2020</string>
+    <string name="label_of_input_note">Note</string>
+    <string name="hint_of_input_note">/5</string>
+    <string name="label_of_input_comment">Commentaire</string>
+    <string name="hint_of_input_comment">Commentaire</string>
+    <string name="save_movie_seen">Sauvegarder</string>
+
+
 </resources>

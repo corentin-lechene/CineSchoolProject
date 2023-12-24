@@ -1,23 +1,21 @@
 package com.cineschoolproject.view
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doBeforeTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cineschoolproject.R
-import com.cineschoolproject.di.injectModuleDependencies
-import com.cineschoolproject.di.parseAndInjectConfiguration
 import com.cineschoolproject.models.movie_model.dto.TheMovieDbDto
-import com.cineschoolproject.viewModel.MovieViewModel
 import com.cineschoolproject.view.adapter.MovieAdapter
+import com.cineschoolproject.viewModel.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 enum class SearchPageView {
@@ -38,8 +36,6 @@ class MovieSearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-        parseAndInjectConfiguration()
-        injectModuleDependencies(this)
 
         this.popularMoviesRecyclerView = findViewById(R.id.popular_movies_recycler_view)
         this.resultMoviesRecyclerView = findViewById(R.id.result_movies_recycler_view)
