@@ -2,6 +2,7 @@ package com.cineschoolproject.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,14 +11,18 @@ import com.cineschoolproject.R
 import com.cineschoolproject.di.injectModuleDependencies
 import com.cineschoolproject.di.parseAndInjectConfiguration
 import com.cineschoolproject.models.movie_model.dto.ViewMovieSeenRequest
-import com.cineschoolproject.viewModel.MovieSeenViewModel
 import com.cineschoolproject.view.adapter.MovieSeenAdapter
+import com.cineschoolproject.view.bottomSheet.FormRegisterMovieSeenBottomSheet
+import com.cineschoolproject.viewModel.MovieSeenViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), BottomSheetListener {
     private val movieSeenViewModel : MovieSeenViewModel by viewModel()
     private lateinit var  movieSeenRecyclerView: RecyclerView
     private lateinit var  searchButton: ImageView
+
+    // TODO: move in movie's detail page
+    private lateinit var  addMovieSeenButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +34,10 @@ class MainActivity : AppCompatActivity() {
         this.movieSeenRecyclerView = findViewById(R.id.movie_seen_rv)
         this.searchButton = findViewById(R.id.search_button_iw)
 
+        // TODO: move in movie's detail page
+        this.addMovieSeenButton = findViewById(R.id.add_movie_seen_bt)
+
+
         this.searchButton.setOnClickListener {
             this.displaySearchPage()
         }
@@ -38,6 +47,11 @@ class MainActivity : AppCompatActivity() {
         }
         this.movieSeenViewModel.getMoviesSeen()
 
+        // TODO: move in movie's detail page
+        this.addMovieSeenButton.setOnClickListener {
+            this.showModalFormMovieSeen()
+        }
+
     }
 
     private fun setImageSliderMoviesSeen(moviesSeen: List<ViewMovieSeenRequest>) {
@@ -46,6 +60,16 @@ class MainActivity : AppCompatActivity() {
         this.movieSeenRecyclerView.adapter = movieSeenAdapter
     }
 
+    // TODO: move in movie's detail page
+    /*
+    * This function opens show Form Register Movie Seen BottomSheet
+    * */
+    private fun showModalFormMovieSeen() {
+        val bottomSheet = FormRegisterMovieSeenBottomSheet(this)
+        bottomSheet.show(supportFragmentManager, "BottomSheetDialog")
+    }
+
+
     private fun displaySearchPage() {
         Intent (
             this,
@@ -53,4 +77,11 @@ class MainActivity : AppCompatActivity() {
         ).also { startActivity(it) }
     }
 
+    override fun onBottomSheetDismissed() {
+        this.movieSeenViewModel.getMoviesSeen()
+    }
+}
+
+interface BottomSheetListener {
+    fun onBottomSheetDismissed()
 }

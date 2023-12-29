@@ -34,7 +34,14 @@
         android:orientation="horizontal"
         tools:itemCount="2"
         tools:listitem="@layout/card_movie_seen"
+        tools:visibility="invisible"
         />
+
+    <Button
+        android:id="@+id/add_movie_seen_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_movie_seen_button" />
 
     <!-- TODO : Eduardo   -->
 
