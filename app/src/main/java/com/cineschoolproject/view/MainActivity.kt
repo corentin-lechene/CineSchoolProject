@@ -10,19 +10,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cineschoolproject.R
 import com.cineschoolproject.di.injectModuleDependencies
 import com.cineschoolproject.di.parseAndInjectConfiguration
+import com.cineschoolproject.models.movie_model.MovieData
 import com.cineschoolproject.models.movie_model.dto.ViewMovieSeenRequest
 import com.cineschoolproject.view.adapter.MovieSeenAdapter
 import com.cineschoolproject.view.bottomSheet.FormRegisterMovieSeenBottomSheet
 import com.cineschoolproject.viewModel.MovieSeenViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity(), BottomSheetListener {
+class MainActivity : AppCompatActivity(), BottomSheetListener, OnMovieClickListener {
     private val movieSeenViewModel : MovieSeenViewModel by viewModel()
     private lateinit var  movieSeenRecyclerView: RecyclerView
     private lateinit var  searchButton: ImageView
 
-    // TODO: move in movie's detail page
-    private lateinit var  addMovieSeenButton: Button
+//    // TODO: move in movie's detail page
+//    private lateinit var  addMovieSeenButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +35,8 @@ class MainActivity : AppCompatActivity(), BottomSheetListener {
         this.movieSeenRecyclerView = findViewById(R.id.movie_seen_rv)
         this.searchButton = findViewById(R.id.search_button_iw)
 
-        // TODO: move in movie's detail page
-        this.addMovieSeenButton = findViewById(R.id.add_movie_seen_bt)
+//        // TODO: move in movie's detail page
+//        this.addMovieSeenButton = findViewById(R.id.add_movie_seen_bt)
 
 
         this.searchButton.setOnClickListener {
@@ -47,10 +48,10 @@ class MainActivity : AppCompatActivity(), BottomSheetListener {
         }
         this.movieSeenViewModel.getMoviesSeen()
 
-        // TODO: move in movie's detail page
-        this.addMovieSeenButton.setOnClickListener {
-            this.showModalFormMovieSeen()
-        }
+//        // TODO: move in movie's detail page
+//        this.addMovieSeenButton.setOnClickListener {
+//            this.showModalFormMovieSeen()
+//        }
 
     }
 
@@ -79,6 +80,20 @@ class MainActivity : AppCompatActivity(), BottomSheetListener {
 
     override fun onBottomSheetDismissed() {
         this.movieSeenViewModel.getMoviesSeen()
+    }
+
+    override fun onMovieClick(movieData: MovieData) {
+        Intent(
+            this,
+            MovieDetailsActivity::class.java
+        ).also {
+            it.putExtra("movieId", movieData.id)
+            it.putExtra("movieImageUrl", movieData.imageUrl)
+            it.putExtra("movieTitle", movieData.title)
+            it.putExtra("movieOverview", movieData.overview)
+            it.putExtra("movieReleasedAt", movieData.releasedAt)
+            startActivity(it)
+        }
     }
 }
 

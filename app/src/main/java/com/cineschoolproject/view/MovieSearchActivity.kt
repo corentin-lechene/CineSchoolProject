@@ -1,6 +1,7 @@
 package com.cineschoolproject.view
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -13,7 +14,9 @@ import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cineschoolproject.R
-import com.cineschoolproject.models.movie_model.dto.TheMovieDbDto
+import com.cineschoolproject.di.injectModuleDependencies
+import com.cineschoolproject.di.parseAndInjectConfiguration
+import com.cineschoolproject.models.movie_model.MovieData
 import com.cineschoolproject.view.adapter.MovieAdapter
 import com.cineschoolproject.viewModel.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -22,7 +25,7 @@ enum class SearchPageView {
     POPULAR,
     SEARCH
 }
-class MovieSearchActivity : AppCompatActivity() {
+class MovieSearchActivity : AppCompatActivity(), OnMovieClickListener {
     private var currentView: SearchPageView = SearchPageView.POPULAR
 
     private val movieViewModel: MovieViewModel by viewModel()
@@ -36,6 +39,8 @@ class MovieSearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+        parseAndInjectConfiguration()
+        injectModuleDependencies(this)
 
         this.popularMoviesRecyclerView = findViewById(R.id.popular_movies_recycler_view)
         this.resultMoviesRecyclerView = findViewById(R.id.result_movies_recycler_view)
@@ -100,19 +105,37 @@ class MovieSearchActivity : AppCompatActivity() {
             this.resultMoviesRecyclerView.visibility = View.VISIBLE
             this.popularMoviesRecyclerView.visibility = View.GONE
             this.searchBarCancelButton.visibility = View.VISIBLE
-            this.resultMoviesRecyclerView.adapter = MovieAdapter(listOf())
+            this.resultMoviesRecyclerView.adapter = MovieAdapter(listOf(), this)
         }
     }
 
-    private fun setUpPopularMovies(movies: List<TheMovieDbDto>) {
-        val popularMovieAdapter = MovieAdapter(movies)
+    private fun setUpPopularMovies(movies: List<MovieData>) {
+        val popularMovieAdapter = MovieAdapter(movies, this)
         this.popularMoviesRecyclerView.layoutManager = LinearLayoutManager(this)
         this.popularMoviesRecyclerView.adapter = popularMovieAdapter
     }
 
-    private fun setUpResultMovies(movies: List<TheMovieDbDto>) {
-        val resultMoviesAdapter = MovieAdapter(movies)
+    private fun setUpResultMovies(movies: List<MovieData>) {
+        val resultMoviesAdapter = MovieAdapter(movies, this)
         this.resultMoviesRecyclerView.layoutManager = LinearLayoutManager(this)
         this.resultMoviesRecyclerView.adapter = resultMoviesAdapter
     }
+
+    override fun onMovieClick(movieData: MovieData) {
+        Intent(
+            this,
+            MovieDetailsActivity::class.java
+        ).also {
+            it.putExtra("movieId", movieData.id)
+            it.putExtra("movieImageUrl", movieData.imageUrl)
+            it.putExtra("movieTitle", movieData.title)
+            it.putExtra("movieOverview", movieData.overview)
+            it.putExtra("movieReleasedAt", movieData.releasedAt)
+            startActivity(it)
+        }
+    }
+}
+
+interface OnMovieClickListener {
+    fun onMovieClick(movieData: MovieData)
 }

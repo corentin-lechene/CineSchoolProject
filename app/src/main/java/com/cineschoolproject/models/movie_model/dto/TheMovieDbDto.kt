@@ -1,5 +1,6 @@
 package com.cineschoolproject.models.movie_model.dto
 
+import com.cineschoolproject.models.movie_model.MovieData
 import com.google.gson.annotations.SerializedName
 
 data class TheMovieDbDto(

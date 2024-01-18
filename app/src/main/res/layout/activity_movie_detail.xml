@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/movie_poster"
+            android:layout_width="0dp"
+            android:scaleType="centerCrop"
+            android:layout_height="500dp"
+            tools:srcCompat="@tools:sample/backgrounds/scenic"
+            style="@style/rounded_corner"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:clipToOutline="true"/>
+
+        <LinearLayout
+            android:id="@+id/text_and_button_section"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            style="@style/watched_section"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="0dp">
+
+            <TextView
+                android:id="@+id/movie_title_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                style="@style/movie_title"
+                android:text="Eras Tour"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="25dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                app:layout_constraintStart_toStartOf="parent">
+
+                    <TextView
+                        android:id="@+id/movie_release_date_label_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/release_at"
+                        style="@style/movie_release_date" />
+
+                    <TextView
+                        android:id="@+id/movie_release_date_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/movie_release_date"
+                        android:layout_gravity="center_vertical"
+                        tools:srcCompat="@tools:sample/lorem" />
+        </LinearLayout>
+
+            <Button
+                android:id="@+id/add_movie_seen_bt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/watched_btn"
+                android:text="@string/add_movie_seen_button" />
+
+            <Button
+                android:id="@+id/delete_movie_seen_bt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/watched_btn"
+                android:text="@string/delete_movie_seen_button"
+                android:layout_marginTop="10dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/movie_description_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:srcCompat="@tools:sample/lorem"/>
+    </LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,5 +1,6 @@
 package com.cineschoolproject.repositories
 
+import com.cineschoolproject.models.movie_model.MovieData
 import com.cineschoolproject.models.movie_model.dto.TheMovieDbDto
 import com.cineschoolproject.services.TheMovieDbApiService
 import io.reactivex.rxjava3.core.Flowable
@@ -26,4 +27,12 @@ class TheMovieDbRepository (
             it.results
         }
     }
+
+    fun getMovieDetails(movieId: Int, language: String): Flowable<MovieData> {
+        return theMovieDbApiService.getMovieDetails(
+            movieId,
+            "fr"
+        )
+    }
+
 }

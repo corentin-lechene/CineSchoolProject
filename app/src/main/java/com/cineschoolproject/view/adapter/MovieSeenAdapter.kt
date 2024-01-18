@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.cineschoolproject.BuildConfig
 import com.cineschoolproject.R
 import com.cineschoolproject.models.movie_model.dto.ViewMovieSeenRequest
 import com.squareup.picasso.Picasso
@@ -29,12 +30,10 @@ class MovieSeenAdapter(private val moviesSeen: List<ViewMovieSeenRequest>) :
         val movieSeen = moviesSeen[position]
         holder.movieSeenTitleTextView.text = movieSeen.title
 
-        Picasso.get().load(movieSeen.imageUrl)
+        Picasso.get().load(BuildConfig.TMDB_MEDIA_URL + "w300" +movieSeen.imageUrl)
             .error(R.drawable.no_image)
             .into(holder.movieSeenImageView)
-
     }
-
 
     override fun getItemCount(): Int {
         return moviesSeen.size

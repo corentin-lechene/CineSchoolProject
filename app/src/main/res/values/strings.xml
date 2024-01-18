@@ -15,8 +15,9 @@
     <string name="search_desc">Rechercher un film</string>
     <string name="my_view_list">Ma Liste</string>
 
-    <!-- Dteail Movie -->
-    <string name="add_movie_seen_button">J\'ai vu ce film</string>
+    <!-- Detail Movie -->
+    <string name="add_movie_seen_button">J\'ai regardé ce film</string>
+    <string name="delete_movie_seen_button">Supprimé de la liste</string>
 
     <!-- Form register movie seen -->
     <string name="title_modal">Enregister un film</string>

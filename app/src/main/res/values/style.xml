@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="top_button">
+        <item name="android:backgroundTint">#FFDA1F</item>
+    </style>
+
+    <style name="watched_section">
+        <item name="android:background">@drawable/rounded_linear_bottom</item>
+    </style>
+
+    <style name="movie_title">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="movie_release_date">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="watched_btn">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:radius">20dp</item>
+        <item name="android:backgroundTint">#FFDA1F</item>
+        <item name="android:layout_margin">20dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="rounded_corner">
+        <item name="android:background">@drawable/rounded_img_corner</item>
+    </style>
+</resources>

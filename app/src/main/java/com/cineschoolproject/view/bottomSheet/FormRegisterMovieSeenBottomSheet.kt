@@ -21,7 +21,6 @@ private const val MIN_THRESHOLD_NOTE = 0
 private const val MAX_THRESHOLD_NOTE = 5
 private const val FORMAT_DATE = "dd-MM-yyyy"
 
-
 class FormRegisterMovieSeenBottomSheet(
     private val bottomSheetListener : BottomSheetListener
 ) : BottomSheetDialogFragment() {
@@ -31,7 +30,18 @@ class FormRegisterMovieSeenBottomSheet(
     private lateinit var  dateInputEditText: EditText
     private lateinit var  noteInputEditText: EditText
     private lateinit var  commentInputEditText: EditText
+    private var movieTitleTextView: String? = null
+    private var moviePosterImageView: String? = null
+    private var movieId: Int = 0
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            movieTitleTextView = it.getString("movieTitle")
+            moviePosterImageView = it.getString("movieImageUrl")
+            movieId = it.getInt("movieId")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,12 +77,9 @@ class FormRegisterMovieSeenBottomSheet(
                 commentEditText
             )
 
-            // TODO : passer les informations depuis les détails du film
-            val title = "Iron man"
-            val imageUrl = "https://image.tmdb.org/t/p/w300/9BBTo63ANSmhC4e6r62OJFuK2GL.jpg"
-            val id = 3
-
-            movieSeenViewModel.addMovieSeen(registerMovieSeenRequest, title, imageUrl, id)
+            val movieTitle = movieTitleTextView ?: "No title"
+            val movieImageUrl = moviePosterImageView ?: "No Image"
+            movieSeenViewModel.addMovieSeen(registerMovieSeenRequest, movieTitle, movieImageUrl, movieId)
             bottomSheetListener.onBottomSheetDismissed()
             dismiss()
         }

@@ -31,4 +31,17 @@ class MovieSeenRepository {
     fun addMovieSeen(movieSeen: MovieSeen) {
         this.moviesSeen.add(movieSeen)
     }
+
+    fun isMovieSeen(movieId: Int): Boolean {
+        for (movie in moviesSeen) {
+            if (movie.id == movieId) {
+                return true
+            }
+        }
+        return false
+    }
+
+    fun deleteMovieSeen(movieId: Int) {
+        moviesSeen.removeIf { it.id == movieId }
+    }
 }

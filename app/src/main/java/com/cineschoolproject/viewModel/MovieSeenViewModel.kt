@@ -50,6 +50,16 @@ class MovieSeenViewModel(
         title = title,
         imageUrl = imageUrl
     )
+
+    fun deleteMovieSeen(movieId: Int) {
+        movieSeenRepository.deleteMovieSeen(movieId)
+        this.getMoviesSeen()
+    }
+
+    fun isMovieSeen(movieId: Int): Boolean {
+        return movieSeenRepository.isMovieSeen(movieId)
+    }
+
     override fun onCleared() {
         super.onCleared()
         disposeBag.clear()
