@@ -22,7 +22,8 @@ private const val MAX_THRESHOLD_NOTE = 5
 private const val FORMAT_DATE = "dd-MM-yyyy"
 
 class FormRegisterMovieSeenBottomSheet(
-    private val bottomSheetListener : BottomSheetListener
+    private val bottomSheetListener : BottomSheetListener,
+    private val movieSeenRegisteredListener: OnMovieSeenRegisteredListener? = null
 ) : BottomSheetDialogFragment() {
 
     private val movieSeenViewModel : MovieSeenViewModel by viewModel()
@@ -81,6 +82,7 @@ class FormRegisterMovieSeenBottomSheet(
             val movieImageUrl = moviePosterImageView ?: "No Image"
             movieSeenViewModel.addMovieSeen(registerMovieSeenRequest, movieTitle, movieImageUrl, movieId)
             bottomSheetListener.onBottomSheetDismissed()
+            movieSeenRegisteredListener?.onMovieSeenRegistered()
             dismiss()
         }
     }
@@ -118,4 +120,10 @@ class FormRegisterMovieSeenBottomSheet(
     }
 
 }
+
+interface OnMovieSeenRegisteredListener {
+    fun onMovieSeenRegistered()
+    fun onMovieSeenDeleted()
+}
+
 

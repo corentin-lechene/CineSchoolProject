@@ -22,9 +22,6 @@ class MainActivity : AppCompatActivity(), BottomSheetListener, OnMovieClickListe
     private lateinit var  movieSeenRecyclerView: RecyclerView
     private lateinit var  searchButton: ImageView
 
-//    // TODO: move in movie's detail page
-//    private lateinit var  addMovieSeenButton: Button
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,10 +32,6 @@ class MainActivity : AppCompatActivity(), BottomSheetListener, OnMovieClickListe
         this.movieSeenRecyclerView = findViewById(R.id.movie_seen_rv)
         this.searchButton = findViewById(R.id.search_button_iw)
 
-//        // TODO: move in movie's detail page
-//        this.addMovieSeenButton = findViewById(R.id.add_movie_seen_bt)
-
-
         this.searchButton.setOnClickListener {
             this.displaySearchPage()
         }
@@ -47,12 +40,6 @@ class MainActivity : AppCompatActivity(), BottomSheetListener, OnMovieClickListe
             this.setImageSliderMoviesSeen(it)
         }
         this.movieSeenViewModel.getMoviesSeen()
-
-//        // TODO: move in movie's detail page
-//        this.addMovieSeenButton.setOnClickListener {
-//            this.showModalFormMovieSeen()
-//        }
-
     }
 
     private fun setImageSliderMoviesSeen(moviesSeen: List<ViewMovieSeenRequest>) {
@@ -60,16 +47,6 @@ class MainActivity : AppCompatActivity(), BottomSheetListener, OnMovieClickListe
         this.movieSeenRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         this.movieSeenRecyclerView.adapter = movieSeenAdapter
     }
-
-    // TODO: move in movie's detail page
-    /*
-    * This function opens show Form Register Movie Seen BottomSheet
-    * */
-    private fun showModalFormMovieSeen() {
-        val bottomSheet = FormRegisterMovieSeenBottomSheet(this)
-        bottomSheet.show(supportFragmentManager, "BottomSheetDialog")
-    }
-
 
     private fun displaySearchPage() {
         Intent (

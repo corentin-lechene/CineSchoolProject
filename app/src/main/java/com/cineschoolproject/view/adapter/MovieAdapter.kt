@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cineschoolproject.BuildConfig
 import com.cineschoolproject.R
 import com.cineschoolproject.models.movie_model.MovieData
+import com.cineschoolproject.models.movie_model.dto.ViewMovieSeenRequest
 import com.cineschoolproject.view.OnMovieClickListener
 import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat

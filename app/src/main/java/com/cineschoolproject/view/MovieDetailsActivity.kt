@@ -1,5 +1,6 @@
 package com.cineschoolproject.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -9,12 +10,14 @@ import android.widget.TextView
 import com.cineschoolproject.BuildConfig
 import com.cineschoolproject.R
 import com.cineschoolproject.view.bottomSheet.FormRegisterMovieSeenBottomSheet
+import com.cineschoolproject.view.bottomSheet.OnMovieSeenRegisteredListener
 import com.cineschoolproject.viewModel.MovieSeenViewModel
 import com.cineschoolproject.viewModel.MovieViewModel
 import com.squareup.picasso.Picasso
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MovieDetailsActivity : AppCompatActivity(), BottomSheetListener {
+class MovieDetailsActivity : AppCompatActivity(), BottomSheetListener,
+    OnMovieSeenRegisteredListener {
     private val movieViewModel: MovieViewModel by viewModel()
     private val movieSeenViewModel : MovieSeenViewModel by viewModel()
     private lateinit var moviePosterImageView: ImageView
@@ -42,6 +45,7 @@ class MovieDetailsActivity : AppCompatActivity(), BottomSheetListener {
         this.deleteMovieSeenButton.setOnClickListener {
             if (movieId != 0) {
                 movieSeenViewModel.deleteMovieSeen(movieId)
+                onMovieSeenDeleted()
             }
         }
 
@@ -59,7 +63,7 @@ class MovieDetailsActivity : AppCompatActivity(), BottomSheetListener {
         val movieImageUrl = intent.getStringExtra("movieImageUrl")
         val movieId = intent.getIntExtra("movieId", 0)
 
-        val bottomSheet = FormRegisterMovieSeenBottomSheet(this).apply {
+        val bottomSheet = FormRegisterMovieSeenBottomSheet(this, this).apply {
             arguments = Bundle().apply {
                 putString("movieTitle", movieTitle)
                 putString("movieImageUrl", movieImageUrl)
@@ -99,5 +103,17 @@ class MovieDetailsActivity : AppCompatActivity(), BottomSheetListener {
 
     override fun onBottomSheetDismissed() {
         this.movieSeenViewModel.getMoviesSeen()
+    }
+
+    override fun onMovieSeenRegistered() {
+        Intent(this, MainActivity::class.java).also {
+            startActivity(it)
+        }
+    }
+
+    override fun onMovieSeenDeleted() {
+        Intent(this, MainActivity::class.java).also {
+            startActivity(it)
+        }
     }
 }
