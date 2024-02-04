@@ -4,37 +4,37 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
+import com.cineschoolproject.BuildConfig
 import com.cineschoolproject.R
+import com.cineschoolproject.models.movie_model.MovieData
+import com.squareup.picasso.Picasso
 
-class SliderAdapter(private val imageList: ArrayList<Int>, private val viewPager2: ViewPager2) :
-    RecyclerView.Adapter<SliderAdapter.ImageViewHolder>() {
-
-    class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imageView: ImageView = itemView.findViewById(R.id.imageSlide)
+class SliderAdapter(private val movies: List<MovieData>) :
+    RecyclerView.Adapter<SliderAdapter.MovieViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.slider, parent, false)
+        return MovieViewHolder(view)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_slider, parent, false)
-        return ImageViewHolder(view)
-    }
+    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+        val movie = this.movies[position]
+        holder.itemMovieTitle.text = movie.title
 
-    override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
-        holder.imageView.setImageResource(imageList[position])
-
-        if(position == imageList.size - 1) {
-            viewPager2.post(runnable)
-        }
+        Picasso.get()
+            .load(BuildConfig.TMDB_MEDIA_URL + "w300" + movie.imageUrl)
+            .error(R.drawable.no_image)
+            .into(holder.itemImage)
     }
 
     override fun getItemCount(): Int {
-        return imageList.size
-
+        return movies.size
     }
 
-    private val runnable = Runnable {
-        imageList.addAll(imageList)
-        notifyDataSetChanged()
+    class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val itemImage: ImageView = itemView.findViewById(R.id.image_slider)
+        val itemMovieTitle: TextView = itemView.findViewById(R.id.text_title_slider)
     }
 }
