@@ -2,6 +2,7 @@ package com.cineschoolproject.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -43,10 +44,11 @@ class MainActivity : AppCompatActivity(), BottomSheetListener, OnMovieClickListe
     }
 
     private fun setImageSliderMoviesSeen(moviesSeen: List<ViewMovieSeenRequest>) {
-        val movieSeenAdapter = MovieSeenAdapter(moviesSeen)
+        val movieSeenAdapter = MovieSeenAdapter(moviesSeen.toMutableList())
         this.movieSeenRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         this.movieSeenRecyclerView.adapter = movieSeenAdapter
     }
+
 
     private fun displaySearchPage() {
         Intent (

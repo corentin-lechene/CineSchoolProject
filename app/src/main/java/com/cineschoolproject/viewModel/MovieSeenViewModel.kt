@@ -53,7 +53,6 @@ class MovieSeenViewModel(
 
     fun deleteMovieSeen(movieId: Int) {
         movieSeenRepository.deleteMovieSeen(movieId)
-        this.getMoviesSeen()
     }
 
     fun isMovieSeen(movieId: Int): Boolean {

@@ -95,6 +95,7 @@ class MovieDetailsActivity : AppCompatActivity(), BottomSheetListener,
     private fun checkIfMovieSeen(movieId: Int) {
         val isMovieSeen = movieSeenViewModel.isMovieSeen(movieId)
         if (isMovieSeen) {
+            addMovieSeenButton.visibility = View.GONE
             deleteMovieSeenButton.visibility = View.VISIBLE
         } else {
             deleteMovieSeenButton.visibility = View.GONE
