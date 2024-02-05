@@ -3,6 +3,7 @@ package com.cineschoolproject.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -42,12 +43,12 @@ class MovieDetailsActivity : AppCompatActivity(), BottomSheetListener,
             this.movieViewModel.getMovieDetails(movieId, "fr")
         }
 
-        this.deleteMovieSeenButton.setOnClickListener {
-            if (movieId != 0) {
-                movieSeenViewModel.deleteMovieSeen(movieId)
-                onMovieSeenDeleted()
-            }
-        }
+//        this.deleteMovieSeenButton.setOnClickListener {
+//            if (movieId != 0) {
+//                movieSeenViewModel.deleteMovieSeen(movieId)
+//                onMovieSeenDeleted()
+//            }
+//        }
 
         this.movieViewModel.movieDetails.observe(this@MovieDetailsActivity) {
             this.setMovieDetails()
@@ -83,25 +84,26 @@ class MovieDetailsActivity : AppCompatActivity(), BottomSheetListener,
         this.movieTitleTextView.text = movieTitle ?: "No title"
         this.movieDescriptionTextView.text = movieOverview ?: "No overview"
         this.movieReleasedAtDate.text = movieReleasedAt ?: "No date"
-        this.checkIfMovieSeen(movieId)
+//        this.checkIfMovieSeen(movieId)
 
-        checkIfMovieSeen(movieId)
+//        checkIfMovieSeen(movieId)
         Picasso.get()
             .load(BuildConfig.TMDB_MEDIA_URL + "w300" + movieImageUrl)
             .placeholder(R.drawable.no_image)
             .into(moviePosterImageView)
     }
 
-    private fun checkIfMovieSeen(movieId: Int) {
-        val isMovieSeen = movieSeenViewModel.isMovieSeen(movieId)
-        if (isMovieSeen) {
-            deleteMovieSeenButton.visibility = View.VISIBLE
-        } else {
-            deleteMovieSeenButton.visibility = View.GONE
-        }
-    }
+//    private fun checkIfMovieSeen(movieId: Int) {
+//        val isMovieSeen = movieSeenViewModel.isMovieSeen(movieId)
+//        if (isMovieSeen) {
+//            deleteMovieSeenButton.visibility = View.VISIBLE
+//        } else {
+//            deleteMovieSeenButton.visibility = View.GONE
+//        }
+//    }
 
     override fun onBottomSheetDismissed() {
+        Log.d("films", "lala")
         this.movieSeenViewModel.getMoviesSeen()
     }
 

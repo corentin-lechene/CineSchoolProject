@@ -16,5 +16,5 @@ internal val coreModule = module {
 
     single { MovieSeenViewModel(get()) }
 
-    single { MovieSeenRepository() }
+    single { MovieSeenRepository(get()) }
 }

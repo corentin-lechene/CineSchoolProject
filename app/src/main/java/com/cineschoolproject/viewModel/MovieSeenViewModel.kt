@@ -10,6 +10,7 @@ import com.cineschoolproject.repositories.MovieSeenRepository
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import kotlin.math.log
 
 class MovieSeenViewModel(
     private val movieSeenRepository: MovieSeenRepository
@@ -51,14 +52,14 @@ class MovieSeenViewModel(
         imageUrl = imageUrl
     )
 
-    fun deleteMovieSeen(movieId: Int) {
-        movieSeenRepository.deleteMovieSeen(movieId)
-        this.getMoviesSeen()
-    }
-
-    fun isMovieSeen(movieId: Int): Boolean {
-        return movieSeenRepository.isMovieSeen(movieId)
-    }
+//    fun deleteMovieSeen(movieId: Int) {
+//        movieSeenRepository.deleteMovieSeen(movieId)
+//        this.getMoviesSeen()
+//    }
+//
+//    fun isMovieSeen(movieId: Int): Boolean {
+//        return movieSeenRepository.isMovieSeen(movieId)
+//    }
 
     override fun onCleared() {
         super.onCleared()

@@ -2,6 +2,7 @@ package com.cineschoolproject.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +37,8 @@ class MainActivity : AppCompatActivity(), BottomSheetListener, OnMovieClickListe
             this.displaySearchPage()
         }
 
+        Log.d("films", "je passe la")
+
         this.movieSeenViewModel.moviesSeen.observe(this@MainActivity) {
             this.setImageSliderMoviesSeen(it)
         }
@@ -44,6 +47,8 @@ class MainActivity : AppCompatActivity(), BottomSheetListener, OnMovieClickListe
 
     private fun setImageSliderMoviesSeen(moviesSeen: List<ViewMovieSeenRequest>) {
         val movieSeenAdapter = MovieSeenAdapter(moviesSeen)
+        Log.d("films", moviesSeen.size.toString())
+
         this.movieSeenRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         this.movieSeenRecyclerView.adapter = movieSeenAdapter
     }
@@ -56,6 +61,7 @@ class MainActivity : AppCompatActivity(), BottomSheetListener, OnMovieClickListe
     }
 
     override fun onBottomSheetDismissed() {
+        Log.d("films", "ici")
         this.movieSeenViewModel.getMoviesSeen()
     }
 
