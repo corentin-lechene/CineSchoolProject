@@ -1,0 +1,4 @@
+INSERT INTO movie_seen (movie_title, movie_image_url, date_seen, note, comment) VALUES
+    ('Film 1', 'url_image_1.jpg', '2022-01-01', 4, 'Un super film!'),
+    ('Film 2', 'url_image_2.jpg', '2022-02-15', 3, 'Pas mal.'),
+    ('Film 3', 'url_image_3.jpg', '2022-03-20', 5, 'Incroyablement bon.');

@@ -27,6 +27,7 @@
     <string name="label_of_input_comment">Commentaire</string>
     <string name="hint_of_input_comment">Commentaire</string>
     <string name="save_movie_seen">Sauvegarder</string>
+    <string name="nothing_in_your_list">Rien dans votre liste</string>
 
 
 </resources>
