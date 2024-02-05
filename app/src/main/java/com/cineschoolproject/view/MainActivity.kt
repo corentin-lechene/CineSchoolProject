@@ -46,12 +46,12 @@ class MainActivity : AppCompatActivity(), BottomSheetListener, OnMovieClickListe
     }
 
     private fun setImageSliderMoviesSeen(moviesSeen: List<ViewMovieSeenRequest>) {
-        val movieSeenAdapter = MovieSeenAdapter(moviesSeen)
+        val movieSeenAdapter = MovieSeenAdapter(moviesSeen.toMutableList())
         Log.d("films", moviesSeen.size.toString())
-
         this.movieSeenRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         this.movieSeenRecyclerView.adapter = movieSeenAdapter
     }
+
 
     private fun displaySearchPage() {
         Intent (

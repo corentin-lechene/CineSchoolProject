@@ -10,7 +10,6 @@ import com.cineschoolproject.repositories.MovieSeenRepository
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.subjects.BehaviorSubject
-import kotlin.math.log
 
 class MovieSeenViewModel(
     private val movieSeenRepository: MovieSeenRepository
