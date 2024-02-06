@@ -48,17 +48,17 @@ class MovieSeenViewModel(
     * */
     private fun MovieSeen.toViewMovieSeenRequest() = ViewMovieSeenRequest(
         title = title,
-        imageUrl = imageUrl
+        imageUrl = imageUrl,
     )
 
-//    fun deleteMovieSeen(movieId: Int) {
-//        movieSeenRepository.deleteMovieSeen(movieId)
-//        this.getMoviesSeen()
-//    }
-//
-//    fun isMovieSeen(movieId: Int): Boolean {
-//        return movieSeenRepository.isMovieSeen(movieId)
-//    }
+    fun deleteMovieSeenById(movieId: Int) {
+        movieSeenRepository.deleteMovieSeenById(movieId)
+        getMoviesSeen()
+    }
+
+    fun isMovieSeen(movieId: Int): Boolean {
+        return movieSeenRepository.isMovieSeen(movieId)
+    }
 
     override fun onCleared() {
         super.onCleared()

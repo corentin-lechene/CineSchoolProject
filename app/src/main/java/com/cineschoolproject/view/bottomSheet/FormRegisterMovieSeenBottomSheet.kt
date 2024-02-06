@@ -10,7 +10,6 @@ import android.widget.Toast
 import com.cineschoolproject.R
 import com.cineschoolproject.exceptions.MovieSeenExceptionMessages
 import com.cineschoolproject.models.movie_model.dto.RegisterMovieSeenRequest
-import com.cineschoolproject.view.BottomSheetListener
 import com.cineschoolproject.viewModel.MovieSeenViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -22,7 +21,6 @@ private const val MAX_THRESHOLD_NOTE = 5
 private const val FORMAT_DATE = "dd-MM-yyyy"
 
 class FormRegisterMovieSeenBottomSheet(
-    private val bottomSheetListener : BottomSheetListener,
     private val movieSeenRegisteredListener: OnMovieSeenRegisteredListener? = null
 ) : BottomSheetDialogFragment() {
 
@@ -81,9 +79,7 @@ class FormRegisterMovieSeenBottomSheet(
             val movieTitle = movieTitleTextView ?: "No title"
             val movieImageUrl = moviePosterImageView ?: "No Image"
             movieSeenViewModel.addMovieSeen(registerMovieSeenRequest, movieTitle, movieImageUrl, movieId)
-            bottomSheetListener.onBottomSheetDismissed()
             movieSeenRegisteredListener?.onMovieSeenRegistered()
-            dismiss()
         }
     }
 

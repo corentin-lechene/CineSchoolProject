@@ -21,23 +21,13 @@ class MovieSeenRepository (private val movieSeenDao: MovieSeenDao) {
 
     fun addMovieSeen(movieSeen: MovieSeen) {
         movieSeenDao.addNewMovieSeen(movieSeen.toMovieSeenEntity());
-//        this.moviesSeen.add(movieSeen)
     }
 
-//    fun isMovieSeen(movieId: Int): Boolean {
-//        val movies = movieSeenDao.fetchAll()
-//
-//        for (movie in movies) {
-//            if (movie.uid == movieId) {
-//                return true
-//            }
-//        }
-//        return false
-//    }
-//
-//    fun deleteMovieSeen(movieId: Int) {
-//        val movies = movieSeenDao.fetchAll()
-//
-//        movies.removeIf { it.id == movieId }
-//    }
+    fun isMovieSeen(movieId: Int): Boolean {
+        return movieSeenDao.isMovieSeen(movieId)
+    }
+    fun deleteMovieSeenById(movieId: Int) {
+        movieSeenDao.deleteMovieSeenById(movieId)
+    }
+
 }

@@ -14,7 +14,10 @@ interface MovieSeenDao {
     @Insert
     fun addNewMovieSeen(movieSeenEntity: MovieSeenEntity)
 
-    @Delete
-    fun deleteMovieSeen(movieSeenEntity: MovieSeenEntity)
+    @Query("DELETE FROM movie_seen WHERE uid = :movieId")
+    fun deleteMovieSeenById(movieId: Int)
+
+    @Query("SELECT COUNT(*) > 0 FROM movie_seen WHERE uid = :movieId")
+    fun isMovieSeen(movieId: Int): Boolean
 
 }

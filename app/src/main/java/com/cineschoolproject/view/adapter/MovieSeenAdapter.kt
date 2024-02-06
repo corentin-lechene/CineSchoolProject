@@ -11,13 +11,14 @@ import com.cineschoolproject.R
 import com.cineschoolproject.models.movie_model.dto.ViewMovieSeenRequest
 import com.squareup.picasso.Picasso
 
-class MovieSeenAdapter(private val moviesSeen: List<ViewMovieSeenRequest>) :
+class MovieSeenAdapter(
+    private val moviesSeen: List<ViewMovieSeenRequest>,
+) :
     RecyclerView.Adapter<MovieSeenAdapter.MovieSeenHolder>() {
 
     class MovieSeenHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val movieSeenImageView: ImageView = itemView.findViewById(R.id.movie_seen_image_iw)
         val movieSeenTitleTextView: TextView = itemView.findViewById(R.id.movie_seen_title_tv)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieSeenHolder {

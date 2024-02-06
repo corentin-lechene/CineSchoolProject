@@ -18,7 +18,7 @@ import com.cineschoolproject.view.bottomSheet.FormRegisterMovieSeenBottomSheet
 import com.cineschoolproject.viewModel.MovieSeenViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity(), BottomSheetListener, OnMovieClickListener {
+class MainActivity : AppCompatActivity() {
     private val movieSeenViewModel : MovieSeenViewModel by viewModel()
     private lateinit var  movieSeenRecyclerView: RecyclerView
     private lateinit var  searchButton: ImageView
@@ -37,8 +37,6 @@ class MainActivity : AppCompatActivity(), BottomSheetListener, OnMovieClickListe
             this.displaySearchPage()
         }
 
-        Log.d("films", "je passe la")
-
         this.movieSeenViewModel.moviesSeen.observe(this@MainActivity) {
             this.setImageSliderMoviesSeen(it)
         }
@@ -47,7 +45,6 @@ class MainActivity : AppCompatActivity(), BottomSheetListener, OnMovieClickListe
 
     private fun setImageSliderMoviesSeen(moviesSeen: List<ViewMovieSeenRequest>) {
         val movieSeenAdapter = MovieSeenAdapter(moviesSeen.toMutableList())
-        Log.d("films", moviesSeen.size.toString())
         this.movieSeenRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         this.movieSeenRecyclerView.adapter = movieSeenAdapter
     }
@@ -59,27 +56,4 @@ class MainActivity : AppCompatActivity(), BottomSheetListener, OnMovieClickListe
             MovieSearchActivity::class.java
         ).also { startActivity(it) }
     }
-
-    override fun onBottomSheetDismissed() {
-        Log.d("films", "ici")
-        this.movieSeenViewModel.getMoviesSeen()
-    }
-
-    override fun onMovieClick(movieData: MovieData) {
-        Intent(
-            this,
-            MovieDetailsActivity::class.java
-        ).also {
-            it.putExtra("movieId", movieData.id)
-            it.putExtra("movieImageUrl", movieData.imageUrl)
-            it.putExtra("movieTitle", movieData.title)
-            it.putExtra("movieOverview", movieData.overview)
-            it.putExtra("movieReleasedAt", movieData.releasedAt)
-            startActivity(it)
-        }
-    }
-}
-
-interface BottomSheetListener {
-    fun onBottomSheetDismissed()
 }
