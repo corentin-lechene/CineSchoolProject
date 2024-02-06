@@ -3,38 +3,35 @@ package com.cineschoolproject
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.os.Looper
-import android.widget.FrameLayout
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
-import com.cineschoolproject.R
 import com.cineschoolproject.di.injectModuleDependencies
 import com.cineschoolproject.di.parseAndInjectConfiguration
 import com.cineschoolproject.models.movie_model.MovieData
 import com.cineschoolproject.models.movie_model.TheMovieDbDto
 import com.cineschoolproject.viewModel.MovieViewModel
-import com.cineschoolproject.viewModel.adapter.DummyAdapter
-import com.cineschoolproject.viewModel.adapter.MovieAdapter
 import com.cineschoolproject.viewModel.adapter.SliderAdapter
+import com.cineschoolproject.viewModel.adapter.MovieAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
+import android.os.Handler
+
 
 class HomeScreen : AppCompatActivity() {
 
     private var currentView: SearchPageView = SearchPageView.POPULAR
     private val movieViewModel: MovieViewModel by viewModel()
 
-    private lateinit var adapter: DummyAdapter
+    private lateinit var adapter: SliderAdapter
     private lateinit var movieRv: RecyclerView
 
     private lateinit var viewPager2: ViewPager2
     private lateinit var viewPager3: ViewPager2
 
-    //private lateinit var handler: Handler
+    private lateinit var handler: Handler
     private lateinit var imageList: ArrayList<TheMovieDbDto>
 
 
@@ -43,13 +40,13 @@ class HomeScreen : AppCompatActivity() {
     private lateinit var popularMoviesAdapter: MovieAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_slider)
+        setContentView(R.layout.activity_home_screen)
 
         parseAndInjectConfiguration()
         injectModuleDependencies(this)
 
         init()
-       /* //Uncomment
+        //Uncomment
        setUpTransformer()
 
         viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -59,7 +56,7 @@ class HomeScreen : AppCompatActivity() {
                 handler.postDelayed(runnable, 2000)
             }
         })
-        */
+
 
         /* viewPager3.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
              override fun onPageSelected(position: Int) {
@@ -70,7 +67,7 @@ class HomeScreen : AppCompatActivity() {
          })*/
     }
 
-   /*// Uncomment
+   // Uncomment
    override fun onPause() {
         super.onPause()
         handler.removeCallbacks(runnable)
@@ -88,7 +85,7 @@ class HomeScreen : AppCompatActivity() {
         viewPager2.currentItem = viewPager2.currentItem + 1
         //viewPager3.currentItem = viewPager3.currentItem + 1
     }
-*/
+
     private fun setUpTransformer() {
         val transformer = CompositePageTransformer()
         transformer.addTransformer(MarginPageTransformer(40))
@@ -103,7 +100,7 @@ class HomeScreen : AppCompatActivity() {
 
     private fun init() {
 
-       // handler = Handler(Looper.myLooper()!!)
+       handler = Handler(Looper.myLooper()!!)
 
 
         //this.popularMoviesRecyclerView = findViewById(R.id.popularMoviesRecyclerView)
@@ -111,7 +108,7 @@ class HomeScreen : AppCompatActivity() {
 
         this.viewPager2 = findViewById(R.id.view_pager2)
 
-        this.adapter = DummyAdapter(listOf())
+        this.adapter = SliderAdapter(listOf(), this.viewPager2)
 
         this.viewPager2.adapter = adapter
 
@@ -170,7 +167,7 @@ class HomeScreen : AppCompatActivity() {
     }*/
 
     private fun setUpPopularMovies(movies: List<MovieData>) {
-        adapter = DummyAdapter(movies)
+        adapter = SliderAdapter(movies, this.viewPager2)
         viewPager2.adapter = adapter
     }
 
