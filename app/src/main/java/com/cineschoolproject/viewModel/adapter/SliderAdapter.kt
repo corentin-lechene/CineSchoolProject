@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso
 
 import kotlin.collections.ArrayList
 
-class SliderAdapter(private val movies: List<MovieData>, private val viewPager2: ViewPager2) :
+class SliderAdapter(private val movies: List<MovieData>, private val viewPager2: ViewPager2, private val showSeanceData: Boolean = false) :
     RecyclerView.Adapter<SliderAdapter.MovieViewHolder>() {
     // Create a mutable copy of the movies list to modify
     private val mutableMovies: MutableList<MovieData> = ArrayList(movies)
@@ -27,6 +27,13 @@ class SliderAdapter(private val movies: List<MovieData>, private val viewPager2:
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movie = this.mutableMovies[position]
         holder.itemMovieTitle.text = movie.title
+
+        if (showSeanceData) {
+            holder.itemMovieReleaseDate.visibility = View.VISIBLE
+            holder.itemMovieReleaseDate.text = movie.releasedAt
+        } else {
+            holder.itemMovieReleaseDate.visibility = View.GONE
+        }
 
         Picasso.get()
             .load(BuildConfig.TMDB_MEDIA_URL + "w780" + movie.imageUrl)
@@ -54,5 +61,6 @@ class SliderAdapter(private val movies: List<MovieData>, private val viewPager2:
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val itemImage: ImageView = itemView.findViewById(R.id.image_slider)
         val itemMovieTitle: TextView = itemView.findViewById(R.id.text_title_slider)
+        val itemMovieReleaseDate: TextView = itemView.findViewById(R.id.date_info)
     }
 }
