@@ -18,7 +18,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieDetailsActivity : AppCompatActivity(),
     OnMovieSeenRegisteredListener {
-    private val movieViewModel: MovieViewModel by viewModel()
     private val movieSeenViewModel : MovieSeenViewModel by viewModel()
     private lateinit var moviePosterImageView: ImageView
     private lateinit var movieTitleTextView: TextView
@@ -37,21 +36,14 @@ class MovieDetailsActivity : AppCompatActivity(),
         this.addMovieSeenButton = findViewById(R.id.add_movie_seen_bt)
         this.deleteMovieSeenButton = findViewById(R.id.delete_movie_seen_bt)
 
-        val movieId = intent.getIntExtra("movieId", 0)
-        if(movieId != 0){
-            this.movieViewModel.getMovieDetails(movieId, "fr")
-        }
-
         this.deleteMovieSeenButton.setOnClickListener {
+            val movieId = intent.getIntExtra("movieId", 0)
             if (movieId != 0) {
                 movieSeenViewModel.deleteMovieSeenById(movieId)
                 onMovieSeenDeleted()
             }
         }
-
-        this.movieViewModel.movieDetails.observe(this@MovieDetailsActivity) {
-            this.setMovieDetails()
-        }
+        this.setMovieDetails()
 
         this.addMovieSeenButton.setOnClickListener {
             this.showModalFormMovieSeen()
