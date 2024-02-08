@@ -26,16 +26,11 @@ class HomeScreen : AppCompatActivity() {
     private val movieViewModel: MovieViewModel by viewModel()
 
     private lateinit var adapter: SliderAdapter
-    private lateinit var movieRv: RecyclerView
 
     private lateinit var viewPager2: ViewPager2
 
     private lateinit var handler: Handler
-    private lateinit var imageList: ArrayList<TheMovieDbDto>
 
-
-    private lateinit var popularMoviesRecyclerView: RecyclerView
-    private lateinit var popularMoviesAdapter: MovieAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_screen)
@@ -44,7 +39,6 @@ class HomeScreen : AppCompatActivity() {
         injectModuleDependencies(this)
 
         init()
-        //Uncomment
         setUpTransformer()
 
         viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -56,7 +50,6 @@ class HomeScreen : AppCompatActivity() {
         })
     }
 
-    // Uncomment
     override fun onPause() {
         super.onPause()
         handler.removeCallbacks(runnable)
@@ -69,8 +62,7 @@ class HomeScreen : AppCompatActivity() {
 
 
     private val runnable = Runnable {
-        //imageList.addAll(imageList)
-        //adapter.notifyDataSetChanged()
+        adapter.notifyDataSetChanged()
         viewPager2.currentItem = viewPager2.currentItem + 1
     }
 
@@ -88,42 +80,20 @@ class HomeScreen : AppCompatActivity() {
     private fun init() {
 
         handler = Handler(Looper.myLooper()!!)
-
-        // view pager 2 ; popular movies
         this.viewPager2 = findViewById(R.id.view_pager2)
         this.adapter = SliderAdapter(listOf(), this.viewPager2)
         this.viewPager2.adapter = adapter
 
         this.movieViewModel.upcomingMovies.observe(this@HomeScreen) {
-             this.setUpPopularMovies(it, viewPager2)
-         }
-         this.movieViewModel.getUpcomingMovies(1)
+            this.setUpPopularMovies(it, viewPager2)
+        }
+        this.movieViewModel.getUpcomingMovies(1)
 
-
-        /*  this.movieViewModel.popularMovies.observe(this@HomeScreen) {
-              this.setUpPopularMovies(it, viewPager2)
-          }
-          this.movieViewModel.getPopularMovies(1)
-  */
-        // view pager 2 ; seances
-
-
-        //! val adapterForViewPager3 = SliderAdapter(imageList, viewPager3) // Adjust with correct data
-        //!  viewPager3.adapter = adapterForViewPager3
-
-// Assuming you have a different dataset or adapter for viewPager3
-// You can initialize and set it here similarly
-
-// Add ViewPager2 instances to their respective containers
-        //findViewById<FrameLayout>(R.id.viewPagerContainer1).addView(viewPager2)
-        // findViewById<FrameLayout>(R.id.viewPagerContainer2).addView(viewPager3)
-
-// Configure other properties as needed
+        // Configure other properties as needed
         viewPager2.offscreenPageLimit = 3
         viewPager2.clipToPadding = false
         viewPager2.clipChildren = false
         viewPager2.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
-
     }
 
     private fun setUpPopularMovies(movies: List<MovieData>, viewPager: ViewPager2) {

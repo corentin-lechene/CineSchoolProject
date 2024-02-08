@@ -77,7 +77,6 @@ class MovieViewModel(
         ).addTo(disposeBag)
     }
 
-
     override fun onCleared() {
         super.onCleared()
         disposeBag.clear()
