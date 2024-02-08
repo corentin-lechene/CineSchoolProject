@@ -35,7 +35,6 @@ class HomeScreen : AppCompatActivity() {
     private lateinit var imageList: ArrayList<TheMovieDbDto>
 
 
-
     private lateinit var popularMoviesRecyclerView: RecyclerView
     private lateinit var popularMoviesAdapter: MovieAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +46,7 @@ class HomeScreen : AppCompatActivity() {
 
         init()
         //Uncomment
-       setUpTransformer()
+        setUpTransformer()
 
         viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -58,17 +57,17 @@ class HomeScreen : AppCompatActivity() {
         })
 
 
-        /* viewPager3.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-             override fun onPageSelected(position: Int) {
-                 super.onPageSelected(position)
-                 handler.removeCallbacks(runnable)
-                 handler.postDelayed(runnable, 2000)
-             }
-         })*/
+        viewPager3.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                handler.removeCallbacks(runnable)
+                handler.postDelayed(runnable, 2000)
+            }
+        })
     }
 
-   // Uncomment
-   override fun onPause() {
+    // Uncomment
+    override fun onPause() {
         super.onPause()
         handler.removeCallbacks(runnable)
     }
@@ -83,7 +82,7 @@ class HomeScreen : AppCompatActivity() {
         //imageList.addAll(imageList)
         //adapter.notifyDataSetChanged()
         viewPager2.currentItem = viewPager2.currentItem + 1
-        //viewPager3.currentItem = viewPager3.currentItem + 1
+        viewPager3.currentItem = viewPager3.currentItem + 1
     }
 
     private fun setUpTransformer() {
@@ -95,45 +94,30 @@ class HomeScreen : AppCompatActivity() {
         }
 
         viewPager2.setPageTransformer(transformer)
-        // viewPager3.setPageTransformer(transformer)
+        viewPager3.setPageTransformer(transformer)
     }
 
     private fun init() {
 
-       handler = Handler(Looper.myLooper()!!)
+        handler = Handler(Looper.myLooper()!!)
 
-
-        //this.popularMoviesRecyclerView = findViewById(R.id.popularMoviesRecyclerView)
-     //   this.movieRv = findViewById(R.id.movies_recycler)
-
+        // view pager 2 ; popular movies
         this.viewPager2 = findViewById(R.id.view_pager2)
-
         this.adapter = SliderAdapter(listOf(), this.viewPager2)
-
         this.viewPager2.adapter = adapter
 
-
-        //viewPager2 = findViewById(R.id.viewPagerContainer1)
-        //!viewPager3 = findViewById(R.id.viewPagerContainer2)
-
-        /* viewPager2 = ViewPager2(this).apply {
-             layoutParams = FrameLayout.LayoutParams(
-                 FrameLayout.LayoutParams.MATCH_PARENT,
-                 FrameLayout.LayoutParams.MATCH_PARENT)
-         } viewPager3 = ViewPager2(this).apply   {  layoutParams = FrameLayout.LayoutParams(
-                 FrameLayout.LayoutParams.MATCH_PARENT,
-                 FrameLayout.LayoutParams.MATCH_PARENT)
-         }*/
-
-
-// Set adapters for each ViewPager2
-        /* imageList = java.util.ArrayList<Int>().apply {
-             add(R.drawable.ic_launcher_foreground) // Add your images
-         }*/
         this.movieViewModel.popularMovies.observe(this@HomeScreen) {
-            this.setUpPopularMovies(it)
+            this.setUpPopularMovies(it, viewPager2)
         }
+        this.movieViewModel.getPopularMovies(1)
 
+        // view pager 2 ; seances
+        viewPager3 = findViewById(R.id.view_pager2_2)
+        this.viewPager3.adapter = adapter
+
+        this.movieViewModel.popularMovies.observe(this@HomeScreen) {
+            this.setUpPopularMovies(it, viewPager3)
+        }
         this.movieViewModel.getPopularMovies(1)
 
 
@@ -148,27 +132,20 @@ class HomeScreen : AppCompatActivity() {
         // findViewById<FrameLayout>(R.id.viewPagerContainer2).addView(viewPager3)
 
 // Configure other properties as needed
-        /* viewPager2.offscreenPageLimit = 3
+        viewPager2.offscreenPageLimit = 3
          viewPager2.clipToPadding = false
          viewPager2.clipChildren = false
          viewPager2.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
- */
+
         //viewPager3.offscreenPageLimit = 3
         //viewPager3.clipToPadding = false
         //viewPager3.clipChildren = false
         //viewPager3.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
     }
 
-    /*private fun setUpPopularMovies(movies: List<MovieData>) {
-        //val popularMovieAdapter = MovieAdapter(movies)
-        val popularMovieAdapter = DummyAdapter(movies)
-        this.movieRv.layoutManager = LinearLayoutManager(this)
-        this.movieRv.adapter = popularMovieAdapter
-    }*/
-
-    private fun setUpPopularMovies(movies: List<MovieData>) {
+    private fun setUpPopularMovies(movies: List<MovieData>, viewPager: ViewPager2) {
         adapter = SliderAdapter(movies, this.viewPager2)
-        viewPager2.adapter = adapter
+        viewPager.adapter = adapter
     }
 
     fun Int.dpToPx(context: Context): Int {

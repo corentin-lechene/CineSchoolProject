@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            tools:srcCompat="@drawable/mission_impossible" />
 
         <TextView
             android:id="@+id/text_title_slider"
@@ -26,5 +26,18 @@
             android:text="Titre"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/date_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="16dp"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:text="01/01/1970"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
 
 </androidx.cardview.widget.CardView>
