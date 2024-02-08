@@ -13,6 +13,13 @@ interface TheMovieDbApiService {
         @Query("page") page: Int,
     ): Flowable<TheMovieDbResponseDto>
 
+    @GET("movie/upcoming")
+    fun getUpcomingMovies(
+        @Query("language") language: String,
+        @Query("region") region: String,
+        @Query("page") page: Int,
+    ): Flowable<TheMovieDbResponseDto>
+
     @GET("search/movie")
     fun getMoviesByQuery(
         @Query("query") query: String,

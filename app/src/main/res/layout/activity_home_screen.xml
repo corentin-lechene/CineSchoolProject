@@ -17,62 +17,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- First ViewPager2 taking up roughly 50% of the screen -->
+    <!-- First ViewPager2 now takes up the rest of the screen -->
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="389dp"
+        android:layout_height="328dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/title_view_pager_1"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_half"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:itemCount="1"
-        tools:listitem="@layout/slider_movie_item" />
-
-    <!-- Guideline to define the top of the rentability banner -->
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_half"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.50" />
-
-    <!-- Rentability Banner with a fixed height -->
-    <include
-        android:id="@+id/included_component"
-        layout="@layout/rentability_banner"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline_half" />
-
-    <!-- Second Section Title -->
-    <TextView
-        android:id="@+id/title_view_pager_2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Mes séances"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="24dp"
-        android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/included_component"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- Second ViewPager2 taking up the remaining space -->
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager2_2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/title_view_pager_2"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_view_pager_1"
+        app:layout_constraintVertical_bias="0.028"
+        tools:itemCount="1"
         tools:listitem="@layout/slider_movie_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

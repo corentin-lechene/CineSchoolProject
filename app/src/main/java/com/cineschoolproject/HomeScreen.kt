@@ -29,7 +29,6 @@ class HomeScreen : AppCompatActivity() {
     private lateinit var movieRv: RecyclerView
 
     private lateinit var viewPager2: ViewPager2
-    private lateinit var viewPager3: ViewPager2
 
     private lateinit var handler: Handler
     private lateinit var imageList: ArrayList<TheMovieDbDto>
@@ -55,15 +54,6 @@ class HomeScreen : AppCompatActivity() {
                 handler.postDelayed(runnable, 2000)
             }
         })
-
-
-        viewPager3.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                handler.removeCallbacks(runnable)
-                handler.postDelayed(runnable, 2000)
-            }
-        })
     }
 
     // Uncomment
@@ -82,7 +72,6 @@ class HomeScreen : AppCompatActivity() {
         //imageList.addAll(imageList)
         //adapter.notifyDataSetChanged()
         viewPager2.currentItem = viewPager2.currentItem + 1
-        viewPager3.currentItem = viewPager3.currentItem + 1
     }
 
     private fun setUpTransformer() {
@@ -94,7 +83,6 @@ class HomeScreen : AppCompatActivity() {
         }
 
         viewPager2.setPageTransformer(transformer)
-        viewPager3.setPageTransformer(transformer)
     }
 
     private fun init() {
@@ -106,19 +94,18 @@ class HomeScreen : AppCompatActivity() {
         this.adapter = SliderAdapter(listOf(), this.viewPager2)
         this.viewPager2.adapter = adapter
 
-        this.movieViewModel.popularMovies.observe(this@HomeScreen) {
-            this.setUpPopularMovies(it, viewPager2)
-        }
-        this.movieViewModel.getPopularMovies(1)
+        this.movieViewModel.upcomingMovies.observe(this@HomeScreen) {
+             this.setUpPopularMovies(it, viewPager2)
+         }
+         this.movieViewModel.getUpcomingMovies(1)
 
+
+        /*  this.movieViewModel.popularMovies.observe(this@HomeScreen) {
+              this.setUpPopularMovies(it, viewPager2)
+          }
+          this.movieViewModel.getPopularMovies(1)
+  */
         // view pager 2 ; seances
-        viewPager3 = findViewById(R.id.view_pager2_2)
-        this.viewPager3.adapter = adapter
-
-        this.movieViewModel.popularMovies.observe(this@HomeScreen) {
-            this.setUpPopularMovies(it, viewPager3)
-        }
-        this.movieViewModel.getPopularMovies(1)
 
 
         //! val adapterForViewPager3 = SliderAdapter(imageList, viewPager3) // Adjust with correct data
@@ -133,14 +120,10 @@ class HomeScreen : AppCompatActivity() {
 
 // Configure other properties as needed
         viewPager2.offscreenPageLimit = 3
-         viewPager2.clipToPadding = false
-         viewPager2.clipChildren = false
-         viewPager2.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+        viewPager2.clipToPadding = false
+        viewPager2.clipChildren = false
+        viewPager2.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
 
-        //viewPager3.offscreenPageLimit = 3
-        //viewPager3.clipToPadding = false
-        //viewPager3.clipChildren = false
-        //viewPager3.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
     }
 
     private fun setUpPopularMovies(movies: List<MovieData>, viewPager: ViewPager2) {
