@@ -44,7 +44,7 @@ class MovieAdapter(private val movies: List<MovieData>,
             .into(holder.itemMovieImage)
 
         holder.itemView.setOnClickListener{
-            onMovieClickHandler.onMovieClick(movie)
+            onMovieClickHandler.onMovieClick(movie.id)
         }
     }
 

@@ -1,9 +1,13 @@
 package com.cineschoolproject.viewModel
 
+import TheMovieDbExtra
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.cineschoolproject.BuildConfig
 import com.cineschoolproject.models.movie_model.MovieData
+import com.cineschoolproject.models.movie_model.MovieExtra
+import com.cineschoolproject.models.movie_model.dto.TheMovieDbDto
 import com.cineschoolproject.repositories.TheMovieDbRepository
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
@@ -21,11 +25,11 @@ class MovieViewModel(
         BehaviorSubject.createDefault(listOf())
     private val _resultMovies: BehaviorSubject<List<MovieData>> =
         BehaviorSubject.createDefault(listOf())
-    private val _movieDetails: BehaviorSubject<MovieData> = BehaviorSubject.create()
+    private val _movieDetails: BehaviorSubject<MovieExtra> = BehaviorSubject.create()
 
     val popularMovies: MutableLiveData<List<MovieData>> = MutableLiveData()
     val resultMovies: MutableLiveData<List<MovieData>> = MutableLiveData()
-    val movieDetails: MutableLiveData<MovieData> = MutableLiveData()
+    val movieDetails: MutableLiveData<MovieExtra> = MutableLiveData()
 
 
     init {
@@ -62,10 +66,11 @@ class MovieViewModel(
         ).addTo(disposeBag)
     }
 
-    fun getMovieDetails(movieId: Int, language: String){
-        this.theMovieDbRepository.getMovieDetails(movieId, language).subscribe(
+    fun getMovieDetails(movieId: Int){
+        this.theMovieDbRepository.getMovieDetails(movieId).subscribe(
             {
-                this._movieDetails.onNext(it)
+                Log.d("getMovieDetails view", it.id.toString())
+                this._movieDetails.onNext(it.toMovieExtra())
             },
             {
                 error ->
@@ -73,7 +78,6 @@ class MovieViewModel(
             }
         ).addTo(disposeBag)
     }
-
 
     override fun onCleared() {
         super.onCleared()

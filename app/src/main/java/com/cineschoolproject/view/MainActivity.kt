@@ -11,10 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cineschoolproject.R
 import com.cineschoolproject.di.injectModuleDependencies
 import com.cineschoolproject.di.parseAndInjectConfiguration
-import com.cineschoolproject.models.movie_model.MovieData
 import com.cineschoolproject.models.movie_model.dto.ViewMovieSeenRequest
 import com.cineschoolproject.view.adapter.MovieSeenAdapter
-import com.cineschoolproject.view.bottomSheet.FormRegisterMovieSeenBottomSheet
 import com.cineschoolproject.viewModel.MovieSeenViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

@@ -121,21 +121,17 @@ class MovieSearchActivity : AppCompatActivity(), OnMovieClickListener {
         this.resultMoviesRecyclerView.adapter = resultMoviesAdapter
     }
 
-    override fun onMovieClick(movieData: MovieData) {
+    override fun onMovieClick(movieId: Int) {
         Intent(
             this,
             MovieDetailsActivity::class.java
         ).also {
-            it.putExtra("movieId", movieData.id)
-            it.putExtra("movieImageUrl", movieData.imageUrl)
-            it.putExtra("movieTitle", movieData.title)
-            it.putExtra("movieOverview", movieData.overview)
-            it.putExtra("movieReleasedAt", movieData.releasedAt)
+            it.putExtra("movieId", movieId)
             startActivity(it)
         }
     }
 }
 
 interface OnMovieClickListener {
-    fun onMovieClick(movieData: MovieData)
+    fun onMovieClick(movieId: Int)
 }
