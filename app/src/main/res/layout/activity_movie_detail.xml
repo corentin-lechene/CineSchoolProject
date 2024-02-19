@@ -57,7 +57,7 @@
                         android:id="@+id/movie_release_date_label_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/release_at"
+                        android:text="@string/released_at"
                         style="@style/movie_release_date" />
 
                     <TextView

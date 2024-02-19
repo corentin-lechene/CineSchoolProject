@@ -18,6 +18,7 @@
     <!-- Detail Movie -->
     <string name="add_movie_seen_button">J\'ai regardé ce film</string>
     <string name="delete_movie_seen_button">Supprimé de la liste</string>
+    <string name="released_at">Sorti le : </string>
 
     <!-- Form register movie seen -->
     <string name="title_modal">Enregister un film</string>

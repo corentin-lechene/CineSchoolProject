@@ -1,6 +1,7 @@
 package com.cineschoolproject.services
 
-import TheMovieDbExtra
+import com.cineschoolproject.models.movie_model.MovieData
+import com.cineschoolproject.models.movie_model.dto.TheMovieDbDto
 import com.cineschoolproject.models.movie_model.dto.TheMovieDbResponseDto
 import io.reactivex.rxjava3.core.Flowable
 import retrofit2.http.GET
@@ -25,6 +26,7 @@ interface TheMovieDbApiService {
     @GET("movie/{movieId}")
     fun getMovieDetails(
         @Path("movieId") movieId: Int,
-    ): Flowable<TheMovieDbExtra>
+        @Query("language") language: String,
+    ): Flowable<MovieData>
 
 }

@@ -3,14 +3,12 @@ package com.cineschoolproject.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.cineschoolproject.BuildConfig
 import com.cineschoolproject.R
-import com.cineschoolproject.models.movie_model.MovieExtra
 import com.cineschoolproject.view.bottomSheet.FormRegisterMovieSeenBottomSheet
 import com.cineschoolproject.view.bottomSheet.OnMovieSeenRegisteredListener
 import com.cineschoolproject.viewModel.MovieSeenViewModel
@@ -40,23 +38,17 @@ class MovieDetailsActivity : AppCompatActivity(),
         this.deleteMovieSeenButton = findViewById(R.id.delete_movie_seen_bt)
 
         val movieId = intent.getIntExtra("movieId", 0)
-        Log.d("MovieDetailsActivity", "onCreate with movie ID: $movieId")
-
-
-        this.movieViewModel.movieDetails.observe(this@MovieDetailsActivity) {
-            Log.d("MovieDetailsActivity", "observable: $movieId")
-            this.setMovieDetails(it)
-        }
-
-        this.addMovieSeenButton.setOnClickListener {
-            this.showModalFormMovieSeen()
-        }
-
         this.deleteMovieSeenButton.setOnClickListener {
             if (movieId != 0) {
                 movieSeenViewModel.deleteMovieSeenById(movieId)
                 onMovieSeenDeleted()
             }
+        }
+
+        this.setMovieDetails()
+
+        this.addMovieSeenButton.setOnClickListener {
+            this.showModalFormMovieSeen()
         }
     }
 
@@ -64,10 +56,6 @@ class MovieDetailsActivity : AppCompatActivity(),
         val movieTitle = intent.getStringExtra("movieTitle")
         val movieImageUrl = intent.getStringExtra("movieImageUrl")
         val movieId = intent.getIntExtra("movieId", 0)
-
-//        Log.d("MovieDetailsActivity", "Showing modal form for movie: ${movieExtra?.title}")
-//        Log.d("MovieDetailsActivity", "Showing modal form for movie: ${movieExtra?.posterPath}")
-//        Log.d("MovieDetailsActivity", "Showing modal form for movie: $movieId")
 
         val bottomSheet = FormRegisterMovieSeenBottomSheet(this).apply {
             arguments = Bundle().apply {
@@ -80,25 +68,21 @@ class MovieDetailsActivity : AppCompatActivity(),
     }
 
 
-    private fun setMovieDetails(movieExtra: MovieExtra) {
-//        Log.d("MovieDetailsActivity", "Setting movie title: ${movieExtra.title}")
-//        Log.d("MovieDetailsActivity", "Setting movie poster: ${movieExtra.posterPath}")
-//        Log.d("MovieDetailsActivity", "Setting movie overview: ${movieExtra.overview}")
-//        Log.d("MovieDetailsActivity", "Setting movie date: ${movieExtra.releaseDate}")
-        Log.d("MovieDetailsActivity", "Setting movie id: ${movieExtra.id}")
-        val movieTitle = movieExtra.title
-        val movieImageUrl = movieExtra.posterPath
-        val movieOverview = movieExtra.overview
-        val movieReleasedAt = movieExtra.releaseDate
+    private fun setMovieDetails() {
+        val movieTitle = intent.getStringExtra("movieTitle")
+        val movieImageUrl = intent.getStringExtra("movieImageUrl")
+        val movieId = intent.getIntExtra("movieId", 0)
+        val movieOverview = intent.getStringExtra("movieOverview")
+        val movieReleasedAt = intent.getStringExtra("movieReleasedAt")
 
-        this.movieTitleTextView.text = movieTitle
-        this.movieDescriptionTextView.text = movieOverview
-        this.movieReleasedAtDate.text = movieReleasedAt
+        this.movieTitleTextView.text = movieTitle ?: "No title"
+        this.movieDescriptionTextView.text = movieOverview ?: "No overview"
+        this.movieReleasedAtDate.text = movieReleasedAt ?: "No date"
 
-        this.checkIfMovieSeen(movieExtra.id)
+        this.checkIfMovieSeen(movieId)
         Picasso.get()
-            .load(BuildConfig.TMDB_MEDIA_URL + "w342" + movieImageUrl)
-            .error(R.drawable.no_image)
+            .load(BuildConfig.TMDB_MEDIA_URL + "w300" + movieImageUrl)
+            .placeholder(R.drawable.no_image)
             .into(moviePosterImageView)
     }
 

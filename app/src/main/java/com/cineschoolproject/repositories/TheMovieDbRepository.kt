@@ -1,11 +1,8 @@
 package com.cineschoolproject.repositories
 
-import TheMovieDbExtra
 import android.util.Log
-import com.cineschoolproject.BuildConfig
 import com.cineschoolproject.models.movie_model.MovieData
 import com.cineschoolproject.models.movie_model.dto.TheMovieDbDto
-import com.cineschoolproject.models.movie_model.dto.TheMovieDbResponseDto
 import com.cineschoolproject.services.TheMovieDbApiService
 import io.reactivex.rxjava3.core.Flowable
 
@@ -32,10 +29,10 @@ class TheMovieDbRepository (
         }
     }
 
-    fun getMovieDetails(movieId: Int): Flowable<TheMovieDbExtra> {
-        Log.d("getMovieDetails repo", movieId.toString())
+    fun getMovieDetails(movieId: Int, language: String): Flowable<MovieData> {
         return theMovieDbApiService.getMovieDetails(
             movieId,
+            "fr"
         )
     }
 
