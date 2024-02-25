@@ -1,5 +1,6 @@
-package com.cineschoolproject.models.movie_model
+package com.cineschoolproject.models.movie_model.dto
 
+import com.cineschoolproject.models.movie_model.MovieData
 import com.google.gson.annotations.SerializedName
 
 data class TheMovieDbDto(
@@ -20,7 +21,7 @@ data class TheMovieDbDto(
     @SerializedName("popularity")
     val popularity: Double,
     @SerializedName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
     @SerializedName("release_date")
     val releaseDate: String,
     @SerializedName("title")

@@ -2,6 +2,7 @@ package com.cineschoolproject.di
 import android.content.Context
 import com.cineschoolproject.BuildConfig
 import com.cineschoolproject.di.modules.coreModule
+import com.cineschoolproject.di.modules.databaseModule
 import com.cineschoolproject.di.modules.remoteModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.loadKoinModules
@@ -37,6 +38,6 @@ fun parseAndInjectConfiguration() {
     )
 }
 
-private val modules = mutableListOf(coreModule, remoteModule)
+private val modules = mutableListOf(coreModule, remoteModule, databaseModule)
 
 data class TheMovieDb(val apiUrl: String, val mediaUrl: String, val apiKey: String)
