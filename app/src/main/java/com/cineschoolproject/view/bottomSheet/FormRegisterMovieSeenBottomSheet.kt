@@ -14,6 +14,7 @@ import com.cineschoolproject.viewModel.MovieSeenViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Locale
 
 private const val MIN_THRESHOLD_NOTE = 0
@@ -103,7 +104,18 @@ class FormRegisterMovieSeenBottomSheet(
 
         return try {
             val dateFormat = SimpleDateFormat(FORMAT_DATE, Locale.getDefault())
-            dateFormat.parse(date)
+            val parsedDate = dateFormat.parse(date)
+
+            val calendar = Calendar.getInstance()
+            if (parsedDate != null) {
+                calendar.time = parsedDate
+            }
+            val year = calendar.get(Calendar.YEAR)
+            if (year < 2000 || year > Calendar.getInstance().get(Calendar.YEAR)) {
+                showError(MovieSeenExceptionMessages.INVALID_DATE_RANGE.message)
+                return false
+            }
+
             true
         } catch (e: Exception) {
             showError(MovieSeenExceptionMessages.INVALID_FORMAT_DATE.message)

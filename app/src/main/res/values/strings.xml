@@ -21,7 +21,7 @@
     <string name="released_at">Sorti le : </string>
 
     <!-- Form register movie seen -->
-    <string name="title_modal">Enregister un film</string>
+    <string name="title_modal">Enregistrer un film</string>
     <string name="label_of_input_date">Date</string>
     <string name="hint_of_input_date">01–01-2020</string>
     <string name="label_of_input_note">Note</string>
