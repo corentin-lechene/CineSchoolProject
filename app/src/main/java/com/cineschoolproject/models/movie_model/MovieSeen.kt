@@ -7,7 +7,7 @@ class MovieSeen (
     val id: Int,
     val title: String,
     val imageUrl: String,
-    val registerMovieSeenRequest: RegisterMovieSeenRequest
+    var registerMovieSeenRequest: RegisterMovieSeenRequest
 )
 
 // Fonction de mapping

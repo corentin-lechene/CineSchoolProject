@@ -19,8 +19,16 @@ class MovieSeenRepository (private val movieSeenDao: MovieSeenDao) {
         }, BackpressureStrategy.BUFFER)
     }
 
+    fun fetchById(id: Int): MovieSeen {
+        return movieSeenDao.fetchById(id).toMovieSeen()
+    }
+
+    fun update(movieSeen: MovieSeen) {
+        movieSeenDao.update(movieSeen.toMovieSeenEntity())
+    }
+
     fun addMovieSeen(movieSeen: MovieSeen) {
-        movieSeenDao.addNewMovieSeen(movieSeen.toMovieSeenEntity());
+        movieSeenDao.addNewMovieSeen(movieSeen.toMovieSeenEntity())
     }
 
     fun isMovieSeen(movieId: Int): Boolean {

@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cineschoolproject.BuildConfig
 import com.cineschoolproject.R
 import com.cineschoolproject.models.movie_model.dto.ViewMovieSeenRequest
+import com.cineschoolproject.view.OnMovieSeenClickListener
 import com.squareup.picasso.Picasso
 
 class MovieSeenAdapter(
     private val moviesSeen: List<ViewMovieSeenRequest>,
+    private val onMovieSeenClickListener: OnMovieSeenClickListener
 ) :
     RecyclerView.Adapter<MovieSeenAdapter.MovieSeenHolder>() {
 
@@ -29,11 +31,17 @@ class MovieSeenAdapter(
 
     override fun onBindViewHolder(holder: MovieSeenHolder, position: Int) {
         val movieSeen = moviesSeen[position]
+
         holder.movieSeenTitleTextView.text = movieSeen.title
+
+        holder.movieSeenImageView.setOnClickListener {
+            this.onMovieSeenClickListener.onMovieSeenClick(movieSeen.id)
+        }
 
         Picasso.get().load(BuildConfig.TMDB_MEDIA_URL + "w300" +movieSeen.imageUrl)
             .error(R.drawable.no_image)
             .into(holder.movieSeenImageView)
+
     }
 
     override fun getItemCount(): Int {
