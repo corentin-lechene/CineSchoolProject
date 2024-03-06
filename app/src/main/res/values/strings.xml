@@ -14,6 +14,7 @@
     <string name="settings_desc">Accéder à vos paramètres</string>
     <string name="search_desc">Rechercher un film</string>
     <string name="my_view_list">Ma Liste</string>
+    <string name="upcoming_movies">Films à venir</string>
 
     <!-- Detail Movie -->
     <string name="add_movie_seen_button">J\'ai regardé ce film</string>

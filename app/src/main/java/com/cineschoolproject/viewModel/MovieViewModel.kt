@@ -34,6 +34,7 @@ class MovieViewModel(
     init {
         _popularMovies.subscribe { popularMovies.postValue(it) }.addTo(disposeBag)
         _resultMovies.subscribe { resultMovies.postValue(it) }.addTo(disposeBag)
+        _upcomingMovies.subscribe { upcomingMovies.postValue(it) }.addTo(disposeBag)
     }
 
     fun getPopularMovies(page: Int) {
@@ -56,6 +57,10 @@ class MovieViewModel(
                 val mappedMovieData = response.map {
                     it.toMovieData()
                 }
+                val logMessage = mappedMovieData.joinToString(separator = ", ", prefix = "[", postfix = "]") {
+                    "Movie(id=${it.id}, title=${it.title})"
+                }
+                Log.d("UpcomingMovies", "Fetched movies: $logMessage")
                 this._upcomingMovies.onNext(mappedMovieData)
             },
             { error ->
