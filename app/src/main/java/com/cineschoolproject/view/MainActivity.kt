@@ -1,6 +1,5 @@
 package com.cineschoolproject.view
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -27,15 +26,12 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 
 class MainActivity : AppCompatActivity(), OnMovieSeenClickListener, ActionBottomSheet {
-    private val movieSeenViewModel : MovieSeenViewModel by viewModel()
-    private lateinit var  movieSeenRecyclerView: RecyclerView
-    private lateinit var  searchButton: ImageView
+    private val movieSeenViewModel: MovieSeenViewModel by viewModel()
+    private lateinit var movieSeenRecyclerView: RecyclerView
+    private lateinit var searchButton: ImageView
     private val movieViewModel: MovieViewModel by viewModel()
-
     private lateinit var adapter: SliderAdapter
-
     private lateinit var viewPager2: ViewPager2
-
     private lateinit var handler: Handler
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +41,20 @@ class MainActivity : AppCompatActivity(), OnMovieSeenClickListener, ActionBottom
         parseAndInjectConfiguration()
         injectModuleDependencies(this)
 
-        init()
+        this.movieSeenRecyclerView = findViewById(R.id.movie_seen_rv)
+        this.searchButton = findViewById(R.id.search_button_iw)
+
+        this.searchButton.setOnClickListener {
+            this.displaySearchPage()
+        }
+
+        this.movieSeenViewModel.moviesSeen.observe(this@MainActivity) {
+            this.setImageSliderMoviesSeen(it)
+        }
+        this.movieSeenViewModel.getMoviesSeen()
+
+
+        initUpcomingMoviesViewPager()
         setUpTransformer()
 
         viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -55,20 +64,7 @@ class MainActivity : AppCompatActivity(), OnMovieSeenClickListener, ActionBottom
                 handler.postDelayed(runnable, 2000)
             }
         })
-
-        this.movieSeenRecyclerView = findViewById(R.id.movie_seen_rv)
-        this.searchButton = findViewById(R.id.search_button_iw)
-
-        this.searchButton.setOnClickListener {
-            this.displaySearchPage()
-        }
-
-       this.movieSeenViewModel.moviesSeen.observe(this@MainActivity) {
-         this.setImageSliderMoviesSeen(it)
-        }
-        this.movieSeenViewModel.getMoviesSeen()
     }
-
 
     override fun onPause() {
         super.onPause()
@@ -82,7 +78,6 @@ class MainActivity : AppCompatActivity(), OnMovieSeenClickListener, ActionBottom
 
 
     private val runnable = Runnable {
-        adapter.notifyDataSetChanged()
         viewPager2.currentItem = viewPager2.currentItem + 1
     }
 
@@ -98,7 +93,7 @@ class MainActivity : AppCompatActivity(), OnMovieSeenClickListener, ActionBottom
     }
 
 
-    private fun init() {
+    private fun initUpcomingMoviesViewPager() {
 
         handler = Handler(Looper.myLooper()!!)
         this.viewPager2 = findViewById(R.id.view_pager2)
@@ -119,7 +114,8 @@ class MainActivity : AppCompatActivity(), OnMovieSeenClickListener, ActionBottom
 
     private fun setImageSliderMoviesSeen(moviesSeen: List<ViewMovieSeenRequest>) {
         val movieSeenAdapter = MovieSeenAdapter(moviesSeen.toMutableList(), this)
-        this.movieSeenRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        this.movieSeenRecyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         this.movieSeenRecyclerView.adapter = movieSeenAdapter
     }
 
@@ -129,7 +125,7 @@ class MainActivity : AppCompatActivity(), OnMovieSeenClickListener, ActionBottom
     }
 
     private fun displaySearchPage() {
-        Intent (
+        Intent(
             this,
             MovieSearchActivity::class.java
         ).also { startActivity(it) }
@@ -143,10 +139,6 @@ class MainActivity : AppCompatActivity(), OnMovieSeenClickListener, ActionBottom
 
     override fun updateMovie(movieSeen: MovieSeen) {
         this.movieSeenViewModel.update(movieSeen)
-    }
-
-    fun Int.dpToPx(context: Context): Int {
-        return (this * context.resources.displayMetrics.density).toInt()
     }
 }
 

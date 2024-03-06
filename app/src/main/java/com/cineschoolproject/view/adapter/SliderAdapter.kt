@@ -32,13 +32,6 @@ class SliderAdapter(
         val movie = this.mutableMovies[position]
         holder.itemMovieTitle.text = movie.title
 
-        /*if (showSeanceData) {
-            holder.itemMovieReleaseDate.visibility = View.VISIBLE
-            holder.itemMovieReleaseDate.text = movie.releasedAt
-        } else {
-            holder.itemMovieReleaseDate.visibility = View.GONE
-        }*/
-
         Picasso.get()
             .load(BuildConfig.TMDB_MEDIA_URL + "w780" + movie.imageUrl)
             .error(R.drawable.no_image)
@@ -65,7 +58,5 @@ class SliderAdapter(
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val itemImage: ImageView = itemView.findViewById(R.id.image_slider)
         val itemMovieTitle: TextView = itemView.findViewById(R.id.text_title_slider)
-        //WIP : add date upcoming
-        //al itemMovieReleaseDate: TextView = itemView.findViewById(R.id.date_info)
     }
 }
