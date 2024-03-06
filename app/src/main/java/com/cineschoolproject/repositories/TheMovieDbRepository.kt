@@ -18,6 +18,16 @@ class TheMovieDbRepository (
         }
     }
 
+    fun getUpcomingMovies(page: Int): Flowable<List<TheMovieDbDto>> {
+        return theMovieDbApiService.getUpcomingMovies(
+            "fr",
+            "fr",
+            page
+        ).map {
+            it.results
+        }
+    }
+
     fun getMoviesByQuery(query: String, page: Int): Flowable<List<TheMovieDbDto>> {
         return theMovieDbApiService.getMoviesByQuery(
             query,

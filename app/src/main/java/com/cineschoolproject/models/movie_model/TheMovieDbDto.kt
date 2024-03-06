@@ -34,13 +34,14 @@ data class TheMovieDbDto(
 ) {
     fun toMovieData(): MovieData {
         return MovieData(
-            this.id,
-            this.title,
-            this.overview,
-            this.backdropPath,
-            this.backdropPath.isBlank(),
-            this.releaseDate,
-            this.voteAverage.toInt(),
+            id = this.id,
+            title = this.title,
+            overview = this.overview,
+            imageUrl = this.backdropPath ?: this.posterPath ?: "", // Fallback to posterPath if backdropPath is null, else empty string
+            hasBackdrop = !this.backdropPath.isNullOrEmpty(), // True if backdropPath is not null/empty, false otherwise
+            releasedAt = this.releaseDate,
+            rating = this.voteAverage.toInt() // Convert Double voteAverage to Int
         )
     }
+
 }
