@@ -1,22 +1,23 @@
-package com.cineschoolproject
+package com.cineschoolproject.view
 
-import com.cineschoolproject.viewModel.adapter.MovieAdapter
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doBeforeTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cineschoolproject.R
 import com.cineschoolproject.di.injectModuleDependencies
 import com.cineschoolproject.di.parseAndInjectConfiguration
 import com.cineschoolproject.models.movie_model.MovieData
-import com.cineschoolproject.models.movie_model.TheMovieDbDto
+import com.cineschoolproject.view.adapter.MovieAdapter
 import com.cineschoolproject.viewModel.MovieViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -24,8 +25,7 @@ enum class SearchPageView {
     POPULAR,
     SEARCH
 }
-
-class MainActivity : AppCompatActivity() {
+class MovieSearchActivity : AppCompatActivity(), OnMovieClickListener {
     private var currentView: SearchPageView = SearchPageView.POPULAR
 
     private val movieViewModel: MovieViewModel by viewModel()
@@ -49,10 +49,10 @@ class MainActivity : AppCompatActivity() {
         this.listHeaderSection = findViewById(R.id.list_header_title)
         this.loadingProgressBar = findViewById(R.id.loading_search_page)
 
-        this.movieViewModel.popularMovies.observe(this@MainActivity) {
+        this.movieViewModel.popularMovies.observe(this@MovieSearchActivity) {
             this.setUpPopularMovies(it)
         }
-        this.movieViewModel.resultMovies.observe(this@MainActivity) {
+        this.movieViewModel.resultMovies.observe(this@MovieSearchActivity) {
             this.setUpResultMovies(it)
             loadingProgressBar.visibility = View.GONE
         }
@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
         this.currentView = newView
 
         if(this.currentView == SearchPageView.POPULAR) {
-            this.listHeaderSection.text = "Films Populaires"
+            this.listHeaderSection.text = getString(R.string.popular_movies)
             this.popularMoviesRecyclerView.visibility = View.VISIBLE
             this.resultMoviesRecyclerView.visibility = View.GONE
             this.searchBarCancelButton.visibility = View.GONE
@@ -101,23 +101,41 @@ class MainActivity : AppCompatActivity() {
             inputMethodManager.hideSoftInputFromWindow(searchBar.windowToken, 0)
             loadingProgressBar.visibility = View.GONE
         } else if(this.currentView == SearchPageView.SEARCH) {
-            this.listHeaderSection.text = "Résultats de la recherche"
+            this.listHeaderSection.text = getString(R.string.result_movies)
             this.resultMoviesRecyclerView.visibility = View.VISIBLE
             this.popularMoviesRecyclerView.visibility = View.GONE
             this.searchBarCancelButton.visibility = View.VISIBLE
-            this.resultMoviesRecyclerView.adapter = MovieAdapter(listOf())
+            this.resultMoviesRecyclerView.adapter = MovieAdapter(listOf(), this)
         }
     }
 
     private fun setUpPopularMovies(movies: List<MovieData>) {
-        val popularMovieAdapter = MovieAdapter(movies)
+        val popularMovieAdapter = MovieAdapter(movies, this)
         this.popularMoviesRecyclerView.layoutManager = LinearLayoutManager(this)
         this.popularMoviesRecyclerView.adapter = popularMovieAdapter
     }
 
     private fun setUpResultMovies(movies: List<MovieData>) {
-        val resultMoviesAdapter = MovieAdapter(movies)
+        val resultMoviesAdapter = MovieAdapter(movies, this)
         this.resultMoviesRecyclerView.layoutManager = LinearLayoutManager(this)
         this.resultMoviesRecyclerView.adapter = resultMoviesAdapter
     }
+
+    override fun onMovieClick(movieData: MovieData) {
+        Intent(
+            this,
+            MovieDetailsActivity::class.java
+        ).also {
+            it.putExtra("movieId", movieData.id)
+            it.putExtra("movieTitle", movieData.title)
+            it.putExtra("movieImageUrl", movieData.imageUrl)
+            it.putExtra("movieOverview", movieData.overview)
+            it.putExtra("movieReleasedAt", movieData.releasedAt)
+            startActivity(it)
+        }
+    }
+}
+
+interface OnMovieClickListener {
+    fun onMovieClick(movieData: MovieData)
 }

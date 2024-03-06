@@ -8,4 +8,28 @@
     <string name="no_date">Date non prévue</string>
     <string name="will_release_at">Sortira le</string>
     <string name="release_at">Sorti le</string>
+
+    <!-- Main Activity -->
+    <string name="home">Accueil</string>
+    <string name="settings_desc">Accéder à vos paramètres</string>
+    <string name="search_desc">Rechercher un film</string>
+    <string name="my_view_list">Ma Liste</string>
+
+    <!-- Detail Movie -->
+    <string name="add_movie_seen_button">J\'ai regardé ce film</string>
+    <string name="delete_movie_seen_button">Supprimé de la liste</string>
+    <string name="released_at">Sorti le : </string>
+
+    <!-- Form register movie seen -->
+    <string name="title_modal">Enregistrer un film</string>
+    <string name="title_modal_form_view_movie_seen">Infos</string>
+    <string name="label_of_input_date">Date</string>
+    <string name="hint_of_input_date">01/01/2020</string>
+    <string name="label_of_input_note">Note</string>
+    <string name="hint_of_input_note">/5</string>
+    <string name="label_of_input_comment">Commentaire</string>
+    <string name="hint_of_input_comment">Commentaire</string>
+    <string name="save_movie_seen">Sauvegarder</string>
+
+
 </resources>

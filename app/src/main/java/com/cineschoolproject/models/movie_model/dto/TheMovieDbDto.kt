@@ -1,12 +1,13 @@
-package com.cineschoolproject.models.movie_model
+package com.cineschoolproject.models.movie_model.dto
 
+import com.cineschoolproject.models.movie_model.MovieData
 import com.google.gson.annotations.SerializedName
 
 data class TheMovieDbDto(
     @SerializedName("adult")
     val adult: Boolean,
     @SerializedName("backdrop_path")
-    val backdropPath: String,
+    val backdropPath: String?,
     @SerializedName("genre_ids")
     val genreIds: List<Int>,
     @SerializedName("id")
@@ -20,7 +21,7 @@ data class TheMovieDbDto(
     @SerializedName("popularity")
     val popularity: Double,
     @SerializedName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
     @SerializedName("release_date")
     val releaseDate: String,
     @SerializedName("title")
@@ -38,7 +39,7 @@ data class TheMovieDbDto(
             this.title,
             this.overview,
             this.backdropPath,
-            this.backdropPath.isBlank(),
+            this.backdropPath.isNullOrBlank(),
             this.releaseDate,
             this.voteAverage.toInt(),
         )

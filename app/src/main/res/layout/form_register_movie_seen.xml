@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?><!-- formRegisterViewMovie.xml -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/title_modal_tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/title_modal"
+        android:textSize="25sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="25dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="25dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_of_input_date"
+            android:textSize="20sp"
+
+            />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/date_input_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/hint_of_input_date"
+            android:inputType="date"
+            android:padding="15dp"
+            android:textSize="15sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_of_input_note"
+            android:textSize="20sp"
+
+            />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/note_input_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/hint_of_input_note"
+            android:inputType="date"
+            android:padding="15dp"
+            android:textSize="15sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_of_input_comment"
+            android:textSize="20sp"
+
+            />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/comment_input_et"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:autofillHints=""
+            android:gravity="start"
+            android:hint="@string/hint_of_input_comment"
+            android:inputType="textMultiLine"
+            android:padding="5dp"
+            android:textSize="15sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <Button
+            android:id="@+id/save_movie_seen_bt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/yellow"
+            android:padding="5dp"
+            android:text="@string/save_movie_seen"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+    </LinearLayout>
+</LinearLayout>
+

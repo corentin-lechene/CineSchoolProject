@@ -1,5 +1,6 @@
-package com.cineschoolproject.viewModel.adapter
+package com.cineschoolproject.view.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cineschoolproject.BuildConfig
 import com.cineschoolproject.R
 import com.cineschoolproject.models.movie_model.MovieData
-import com.cineschoolproject.models.movie_model.TheMovieDbDto
+import com.cineschoolproject.models.movie_model.dto.ViewMovieSeenRequest
+import com.cineschoolproject.view.OnMovieClickListener
 import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class MovieAdapter(private val movies: List<MovieData>) :
+class MovieAdapter(private val movies: List<MovieData>,
+    private val onMovieClickHandler: OnMovieClickListener
+) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -26,7 +30,7 @@ class MovieAdapter(private val movies: List<MovieData>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_movie_layout, parent, false)
+            .inflate(R.layout.card_movie_search, parent, false)
         return MovieViewHolder(view)
     }
 
@@ -38,6 +42,10 @@ class MovieAdapter(private val movies: List<MovieData>) :
             .load(BuildConfig.TMDB_MEDIA_URL + "w300" + movie.imageUrl)
             .error(R.drawable.no_image)
             .into(holder.itemMovieImage)
+
+        holder.itemView.setOnClickListener{
+            onMovieClickHandler.onMovieClick(movie)
+        }
     }
 
     private fun formatDate(date: String): String {
