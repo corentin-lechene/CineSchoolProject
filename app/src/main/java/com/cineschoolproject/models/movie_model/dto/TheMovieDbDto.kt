@@ -39,7 +39,7 @@ data class TheMovieDbDto(
             this.title,
             this.overview,
             this.backdropPath,
-            this.backdropPath.isNullOrBlank(),
+            this.backdropPath.isBlank(),
             this.releaseDate,
             this.voteAverage.toInt(),
         )

@@ -19,11 +19,14 @@ class MovieViewModel(
 
     private val _popularMovies: BehaviorSubject<List<MovieData>> =
         BehaviorSubject.createDefault(listOf())
+    private val _upcomingMovies: BehaviorSubject<List<MovieData>> =
+        BehaviorSubject.createDefault(listOf())
     private val _resultMovies: BehaviorSubject<List<MovieData>> =
         BehaviorSubject.createDefault(listOf())
     private val _movieDetails: BehaviorSubject<MovieData> = BehaviorSubject.create()
 
     val popularMovies: MutableLiveData<List<MovieData>> = MutableLiveData()
+    val upcomingMovies: MutableLiveData<List<MovieData>> = MutableLiveData()
     val resultMovies: MutableLiveData<List<MovieData>> = MutableLiveData()
     val movieDetails: MutableLiveData<MovieData> = MutableLiveData()
 
@@ -31,7 +34,6 @@ class MovieViewModel(
     init {
         _popularMovies.subscribe { popularMovies.postValue(it) }.addTo(disposeBag)
         _resultMovies.subscribe { resultMovies.postValue(it) }.addTo(disposeBag)
-        _movieDetails.subscribe { movieDetails.postValue(it) }.addTo(disposeBag)
     }
 
     fun getPopularMovies(page: Int) {
@@ -44,6 +46,20 @@ class MovieViewModel(
             },
             { error ->
                 Log.d("getPopularMovies", error.message.toString())
+            }
+        ).addTo(disposeBag)
+    }
+
+    fun getUpcomingMovies(page: Int) {
+        this.theMovieDbRepository.getUpcomingMovies(page).subscribe(
+            { response ->
+                val mappedMovieData = response.map {
+                    it.toMovieData()
+                }
+                this._upcomingMovies.onNext(mappedMovieData)
+            },
+            { error ->
+                Log.d("getUpcomingMovies", error.message.toString())
             }
         ).addTo(disposeBag)
     }
@@ -62,17 +78,6 @@ class MovieViewModel(
         ).addTo(disposeBag)
     }
 
-    fun getMovieDetails(movieId: Int,  language: String){
-        this.theMovieDbRepository.getMovieDetails(movieId, language).subscribe(
-            {
-                this._movieDetails.onNext(it)
-            },
-            {
-                error ->
-                Log.d("getMovieDetails", error.message.toString())
-            }
-        ).addTo(disposeBag)
-    }
 
     override fun onCleared() {
         super.onCleared()
