@@ -53,7 +53,6 @@ class MainActivity : AppCompatActivity(), OnMovieSeenClickListener, ActionBottom
         }
         this.movieSeenViewModel.getMoviesSeen()
 
-
         initUpcomingMoviesViewPager()
         setUpTransformer()
 
